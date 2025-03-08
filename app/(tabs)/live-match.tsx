@@ -6,7 +6,7 @@ import tw from 'twrnc';
 import MatchItem from '../../components/live-match/MatchItem';
 
 export default function LiveMatch() {
-  const socket = io('http://192.168.172.115:3000/');
+  const socket = io('http://192.168.1.101:3000/');
   const [matchList, setMatchList] = useState<any>()
   useEffect(() => {
     
