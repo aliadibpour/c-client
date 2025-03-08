@@ -3,13 +3,12 @@ import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
 import { io } from 'socket.io-client';
 import tw from 'twrnc';
-import MatchItem from './match-item';
+import MatchItem from '../../components/live-match/MatchItem';
 
-export default function Live() {
+export default function LiveMatch() {
   const socket = io('http://192.168.172.115:3000/');
   const [matchList, setMatchList] = useState<any>()
   useEffect(() => {
-    // گوش دادن به رویداد matchUpdate از سرور
     
     socket.on('connect', () => {
       console.log('Connected to server');

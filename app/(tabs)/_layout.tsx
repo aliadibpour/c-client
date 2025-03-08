@@ -2,7 +2,7 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 import HomeScreen from "./";
-import Live from "./profile";
+import LiveMatch from "./live-match";
 
 const Tab = createBottomTabNavigator();
 
@@ -27,7 +27,7 @@ export default function TabLayout() {
       })}
     >
       <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="live" component={Live} />
+      <Tab.Screen name="live" component={LiveMatch} />
     </Tab.Navigator>
   );
 }

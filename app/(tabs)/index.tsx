@@ -2,9 +2,6 @@ import { useEffect, useState } from 'react';
 import { Image, StyleSheet, View, Text, ScrollView } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import tw from 'twrnc';
-import axios from "axios";
-import { io } from 'socket.io-client';
-
 
 export default function HomeScreen() {
   const [data, setData] = useState<any>([])
