@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Image, StyleSheet, View, Text, ScrollView } from 'react-native';
-import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { Image, View, Text, ScrollView } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import tw from 'twrnc';
 
 export default function HomeScreen() {
@@ -16,7 +16,9 @@ export default function HomeScreen() {
   return (
     <SafeAreaView style={tw`flex text-black justify-center items-center flex-1`}>
       <ScrollView style={{ flex: 1 }}>
-      <Text style={tw``}>corner</Text>
+      <Text className='text-red-700 text-lg'>corner</Text>
+      <Text className='text-blue-800 text-xs'>corner</Text>
+      <Text >corner</Text>
         {
           data?.map((item:any, index:number) => 
           <View style={tw`justify-items-start bg-gray-900 mb-3 rounded-lg pb-2 m-2`} key={index}>

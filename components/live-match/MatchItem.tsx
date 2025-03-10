@@ -1,50 +1,47 @@
 import React from 'react';
-import { View, Text, Image } from 'react-native';
-import tw from 'tailwind-react-native-classnames';
-
+import { View, Text, Image, StyleSheet } from 'react-native';
 
 const MatchItem: React.FC<any> = ({ matchList }) => {
   return (
-    <View style={tw`py-2 mt-3 rounded bg-gray-900`}>
-      <View style={tw`flex-row items-center rounded bg-gray-900 py-1 px-2`}>
-        <Image source={{ uri: matchList.leagueImage }} style={tw`w-6 h-6`} />
-        <Text style={tw`text-sm text-gray-300`}>{matchList.league}</Text>
+    <View>
+      <View style={styles.league}>
+        <Image source={{ uri: matchList.leagueImage }} style={styles.teamImage} />
+        <Text>{matchList.league}</Text>
       </View>
 
-      {/* Matches List */}
       {matchList.matchList.map((match: any, index: number) => (
         <View
           key={index}
-          style={[
-            tw`flex-row items-center justify-between px-2 py-3 mt-2`,
-            index !== matchList.matchList.length - 1 ? tw`border-b border-gray-700` : {},
-          ]}
+          className={`flex-row items-center justify-between px-2 py-3 mt-2 ${
+            index !== matchList.matchList.length - 1 ? 'border-b border-gray-700' : ''
+          }`}
+          style={styles.match}
         >
-          <View style={tw`flex-row items-center justify-end `}>
-            <Text style={tw`text-white`}>{match.homeTeam}</Text>
+          <View className="flex-row items-center justify-end">
+            <Text className="text-black">{match.homeTeam}</Text>
             <Image
               source={{ uri: match.homeTeamImage || 'http://goo.gl/vyAs27' }}
-              style={tw`w-9 h-9`}
+              style={styles.teamImage}
             />
           </View>
 
-          <View style={tw`items-center`}>
-            <Text style={tw`text-white`}>{match.score ? match.score : '+90'}</Text>
+          <View className="items-center">
+            <Text className="text-black">{match.score ? match.score : '+90'}</Text>
             {match.matchFinish ? (
-              <Text style={tw`text-gray-500`}>{match.matchFinish}</Text>
+              <Text className="text-gray-500">{match.matchFinish}</Text>
             ) : match.matchMinutes ? (
-              <Text style={tw`text-green-600`}>{match.matchMinutes}</Text>
+              <Text className="text-green-600">{match.matchMinutes}</Text>
             ) : (
-              <Text style={tw`text-green-600`}>{match.matchMinutesAfter90}</Text>
+              <Text className="text-green-600">{match.matchMinutesAfter90}</Text>
             )}
           </View>
 
-          <View style={tw`flex-row items-center justify-start `}>
+          <View className="flex-row items-center justify-start">
             <Image
               source={{ uri: match.awayTeamImage || 'http://goo.gl/vyAs27' }}
-              style={tw`w-9 h-9`}
+              style={styles.teamImage}
             />
-            <Text style={tw`text-white`}>{match.awayTeam}</Text>
+            <Text className="text-black">{match.awayTeam}</Text>
           </View>
         </View>
       ))}
@@ -53,3 +50,17 @@ const MatchItem: React.FC<any> = ({ matchList }) => {
 };
 
 export default MatchItem;
+const styles = StyleSheet.create({
+  teamImage: {
+    width: 46,
+    height: 46
+  },
+  league: {
+    display: "flex",
+    flexDirection:"row",
+  },
+  match: {
+    display: "flex",
+    flexDirection: "row",
+  }
+})
