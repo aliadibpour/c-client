@@ -11,7 +11,6 @@ export default function HomeScreen() {
     //   console.log(data);
     // } 
     //)
-
   },[])
   return (
     <SafeAreaView style={tw`flex text-black justify-center items-center flex-1`}>

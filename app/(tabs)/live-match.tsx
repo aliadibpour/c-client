@@ -11,17 +11,18 @@ const socket = io('http://192.168.1.102:3000/');
 export default function LiveMatch() {
   const [matchList, setMatchList] = useState<any>();
   const router = useRouter();
-  const params = useGlobalSearchParams();
+  const {day} = useGlobalSearchParams();
   
   useEffect(() => {
-    router.setParams({day: "3"})
+    router.setParams({day: "2"})
   },[])
   useEffect(() => {
-    socket.emit("live-match",3, (response: any) => {
+    socket.emit("live-match",day, (response: any) => {
       console.log(response);
+      console.log(day)
       setMatchList(response.matchList)
     })
-  }, [params])
+  }, [day])
   return (
       <ScrollView style={tw`flex`}>
       <SafeAreaView>

@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import { dateDiplayFormat, dateFormat } from "@/shared/helpers";
-import { useLocalSearchParams, useRouter } from "expo-router";
+import { useGlobalSearchParams, useLocalSearchParams, usePathname, useRouter } from "expo-router";
 
 const MatchDays: React.FC<any> = () => {
     const today = dateDiplayFormat({ date: dateFormat(new Date()), locale: "fa", format: "ddd dd mm" });
     const tomorrow = dateDiplayFormat({ date: dateFormat(new Date(Date.now() + 864e5)), locale: "fa", format: "ddd dd mm" });
     const yesterday = dateDiplayFormat({ date: dateFormat(new Date(Date.now() - 864e5)), locale: "fa", format: "ddd dd mm" });
-
+    const params = useGlobalSearchParams();
+    const pathname = usePathname();
     const [days, setDays] = useState<any[]>([]);
     const router = useRouter();
     const [selectedDay, setSelectedDay] = useState<any>("3");
@@ -29,8 +30,9 @@ const MatchDays: React.FC<any> = () => {
 
     function selectDay(day: number) {
         const newDay = day.toString();
-        router.setParams({ day: newDay });
+        router.push({ pathname: "/live-match", params: {day: newDay} })
         setSelectedDay(newDay);
+        console.log(params, pathname)
     }
 
     return (

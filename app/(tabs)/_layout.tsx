@@ -16,7 +16,7 @@ export default function TabLayout() {
 
           if (route.name === "Home") {
             iconName = focused ? "home" : "home-outline";
-          } else if (route.name === "live") {
+          } else if (route.name === "live-match") {
             iconName = focused ? "person" : "person-outline";
           }
 
@@ -27,7 +27,7 @@ export default function TabLayout() {
       })}
     >
       <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="live" component={LiveMatch} />
+      <Tab.Screen name="live-match" component={LiveMatch} />
     </Tab.Navigator>
   );
 }
