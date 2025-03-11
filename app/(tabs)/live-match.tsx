@@ -17,20 +17,10 @@ export default function LiveMatch() {
     router.setParams({day: "3"})
   },[])
   useEffect(() => {
-    // socket.on('connect', () => {
-    //   console.log('Connected to server');
-    //   socket.emit('live-match-day', 3);
-    // });
     socket.emit("live-match",3, (response: any) => {
       console.log(response);
       setMatchList(response.matchList)
     })
-    // socket.on('live-match-list', (data: any) => {
-    //   console.log(data);
-    //   setMatchList(data.matchList)
-    // });
-    console.log(params, "ddd");
-    
   }, [params])
   return (
       <ScrollView style={tw`flex`}>
