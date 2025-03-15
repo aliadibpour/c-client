@@ -11,7 +11,7 @@ const MatchDays: React.FC<any> = () => {
     const pathname = usePathname();
     const [days, setDays] = useState<any[]>([]);
     const router = useRouter();
-    const [selectedDay, setSelectedDay] = useState<any>("3");
+    const [selectedDay, setSelectedDay] = useState<any>("2");
 
     useEffect(() => {
         const d: any = [];
