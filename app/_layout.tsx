@@ -10,7 +10,7 @@ export default function RootLayout() {
     ...DefaultTheme,
     colors: {
       ...DefaultTheme.colors,
-      background: "#171717",
+      background: "#141414",
       text: "#eef0ed",
     },
   };

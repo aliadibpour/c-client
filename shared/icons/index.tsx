@@ -1,4 +1,4 @@
-import Svg, { Path } from "react-native-svg";
+import Svg, { Circle, Line, Path, Rect } from "react-native-svg";
 
 export const HouseIcon = ({ color = "white", size = 24 }) => {
     return(
@@ -30,3 +30,26 @@ export const ProfileIcon = ({ color = "white", size = 24 }) => {
         </Svg>
     )
 }
+
+export const LiveScoreIcon = ({ color = "white", size = 24 }) => {
+    return (
+      <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+        {/* Outer Rectangle (Football Pitch) */}
+        <Rect x="2" y="4" width="20" height="16" stroke={color} strokeWidth="2" rx="2" />
+        
+        {/* Center Circle */}
+        <Circle cx="12" cy="12" r="3" stroke={color} strokeWidth="2" />
+        
+        {/* Midline */}
+        <Line x1="12" y1="4" x2="12" y2="20" stroke={color} strokeWidth="2" />
+        
+        {/* Left Penalty Area */}
+        <Rect x="2" y="8" width="4" height="8" stroke={color} strokeWidth="2" />
+        <Circle cx="6" cy="12" r="1" fill={color} />
+  
+        {/* Right Penalty Area */}
+        <Rect x="18" y="8" width="4" height="8" stroke={color} strokeWidth="2" />
+        <Circle cx="18" cy="12" r="1" fill={color} />
+      </Svg>
+    );
+  };

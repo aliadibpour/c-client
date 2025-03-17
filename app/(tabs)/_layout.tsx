@@ -5,7 +5,7 @@ import HomeScreen from ".";
 import LiveMatch from "./live-match";
 import Profile from "./profile";
 import Telegram from "./telegram";
-import { HouseIcon, TelegramIcon, ProfileIcon } from "@/shared/icons";
+import { HouseIcon, TelegramIcon, ProfileIcon, LiveScoreIcon } from "@/shared/icons";
 
 const Tab = createBottomTabNavigator();
 
@@ -16,9 +16,10 @@ export default function TabLayout() {
         headerShown: false,
         tabBarShowLabel: false,
         tabBarStyle: {
-          backgroundColor: "#171717",
-          borderTopColor: "#0d0d0d",
-          paddingTop: 5
+          backgroundColor: "#141414",
+          paddingTop: 5,
+          height: 60,
+          borderTopWidth:0,
         },
       }}
     >
@@ -27,7 +28,7 @@ export default function TabLayout() {
         component={HomeScreen} 
         options={{
           tabBarIcon: ({ focused }) => (
-            <HouseIcon color={focused ? "white" : "gray"} size={32} />
+            <HouseIcon color={focused ? "white" : "gray"} size={29} />
           )
         }} 
       />
@@ -36,7 +37,7 @@ export default function TabLayout() {
         component={Telegram} 
         options={{
           tabBarIcon: ({ focused }) => (
-            <TelegramIcon color={focused ? "white" : "gray"} size={32} />
+            <TelegramIcon color={focused ? "white" : "gray"} size={29} />
           )
         }} 
       />
@@ -45,7 +46,7 @@ export default function TabLayout() {
         component={LiveMatch} 
         options={{
           tabBarIcon: ({ focused }) => (
-            <ProfileIcon color={focused ? "white" : "gray"} size={32} />
+            <LiveScoreIcon color={focused ? "white" : "gray"} size={29} />
           )
         }} 
       />
@@ -54,7 +55,7 @@ export default function TabLayout() {
         component={Profile} 
         options={{
           tabBarIcon: ({ focused }) => (
-            <ProfileIcon color={focused ? "white" : "gray"} size={32} />
+            <ProfileIcon color={focused ? "white" : "gray"} size={29} />
           )
         }} 
       />
