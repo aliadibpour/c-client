@@ -17,7 +17,7 @@ export default function HomeScreen() {
       <ScrollView style={{ flex: 1 }}>
       <Text className='text-red-700 text-lg'>corner</Text>
       <Text className='text-blue-800 text-xs'>corner</Text>
-      <Text >corner</Text>
+      <Text>corner</Text>
         {/* {
           data?.map((item:any, index:number) => 
           <View style={tw`justify-items-start bg-gray-900 mb-3 rounded-lg pb-2 m-2`} key={index}>

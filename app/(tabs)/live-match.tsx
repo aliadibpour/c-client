@@ -6,7 +6,7 @@ import MatchItem from '../../components/live-match/MatchItem';
 import MatchDays from '@/components/live-match/MatchDays';
 import { useGlobalSearchParams, useLocalSearchParams, useRouter } from 'expo-router';
 
-const socket = io('http://192.168.1.101:3000/');
+const socket = io('http://172.29.64.1:3000/');
 export default function LiveMatch() {
   const [matchList, setMatchList] = useState<any>();
   const router = useRouter();
@@ -24,14 +24,12 @@ export default function LiveMatch() {
   }, [day])
   return (
       <ScrollView>
-      <SafeAreaView className='max-w-screen-xl m-auto flex'>
         <MatchDays />
       {
         matchList?.length ?
         matchList.map((matchList:any) => <MatchItem matchList={matchList} key={matchList.league} />) :
         <Text>loading</Text>
       }
-      </SafeAreaView>
       </ScrollView>
   )
 };

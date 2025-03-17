@@ -3,30 +3,30 @@ import { View, Text, Image, StyleSheet } from 'react-native';
 
 const MatchItem: React.FC<any> = ({ matchList }) => {
   return (
-    <View>
-      <View style={styles.league}>
-        <Image source={{ uri: matchList.leagueImage }} style={styles.teamImage} />
-        <Text>{matchList.league}</Text>
+    <View className='bg-zinc-900/40 mt-3 py-5 rounded'>
+      <View>
+        <Image source={{ uri: matchList.leagueImage }}
+        className='w-8 h-8' />
+        <Text className='text-white'>{matchList.league}</Text>
       </View>
 
       {matchList.matchList.map((match: any, index: number) => (
         <View
           key={index}
           className={`flex-row items-center justify-between px-2 py-3 mt-2 ${
-            index !== matchList.matchList.length - 1 ? 'border-b border-gray-700' : ''
+            index !== matchList.matchList.length - 1 ? 'border-b border-black/30' : ''
           }`}
-          style={styles.match}
         >
           <View className="flex-row items-center justify-end">
-            <Text className="text-black">{match.homeTeam}</Text>
-            <Image
+            <Text className='text-white'>{match.homeTeam}</Text>
+            <Image 
+              className="rounded-md w-10 h-10"
               source={{ uri: match.homeTeamImage || 'http://goo.gl/vyAs27' }}
-              style={styles.teamImage}
             />
           </View>
 
           <View className="items-center">
-            <Text className="text-black">{match.score ? match.score : '+90'}</Text>
+            <Text className='text-white'>{match.score ? match.score : '+90'}</Text>
             {match.matchFinish ? (
               <Text className="text-gray-500">{match.matchFinish}</Text>
             ) : match.matchMinutes ? (
@@ -37,11 +37,11 @@ const MatchItem: React.FC<any> = ({ matchList }) => {
           </View>
 
           <View className="flex-row items-center justify-start">
-            <Image
+            <Image 
+              className="rounded-md w-10 h-10"
               source={{ uri: match.awayTeamImage || 'http://goo.gl/vyAs27' }}
-              style={styles.teamImage}
             />
-            <Text className="text-black">{match.awayTeam}</Text>
+            <Text className='text-white'>{match.awayTeam}</Text>
           </View>
         </View>
       ))}
@@ -50,17 +50,3 @@ const MatchItem: React.FC<any> = ({ matchList }) => {
 };
 
 export default MatchItem;
-const styles = StyleSheet.create({
-  teamImage: {
-    width: 46,
-    height: 46
-  },
-  league: {
-    display: "flex",
-    flexDirection:"row",
-  },
-  match: {
-    display: "flex",
-    flexDirection: "row",
-  }
-})
