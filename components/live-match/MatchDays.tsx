@@ -36,21 +36,15 @@ const MatchDays: React.FC<any> = () => {
     }
 
     return (
-        <ScrollView horizontal style={{ backgroundColor: "#1a1a1a", padding: 10 }}>
+        <ScrollView horizontal>
             {days.length ? (
                 days.map((day ,index:number) => (
                     <TouchableOpacity
                         key={day.date}
                         onPress={() => selectDay(index)}
-                        style={{
-                            paddingHorizontal: 15,
-                            paddingVertical: 5,
-                            backgroundColor: index == selectedDay ? "#d1d5db" : "#3a3a3a",
-                            borderRadius: 10,
-                            marginHorizontal: 5,
-                        }}
+                        className={`p-4 px-8 ${+selectedDay == index && "border-b-2 border-white"}`}
                     >
-                        <Text style={{ color: index == selectedDay ? "#000" : "#fff" }}>
+                        <Text className={`text-white font-vazir`}>
                             {day.weekday === today ? "امروز" : day.weekday === yesterday ? "دیروز" : day.weekday === tomorrow ? "فردا" : day.weekday}
                         </Text>
                     </TouchableOpacity>

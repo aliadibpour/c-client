@@ -18,18 +18,19 @@
     },
     "web": {
       "bundler": "metro",
-      "output": "static"
+      "output": "static",
+      "font": "vazir"
     },
     "plugins": [
       "expo-router",
-      
       [
         "expo-splash-screen",
         {
           "imageWidth": 200,
           "resizeMode": "contain"
         }
-      ]
+      ],
+      "expo-font"
     ],
     "experiments": {
       "typedRoutes": true
