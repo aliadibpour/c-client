@@ -5,7 +5,8 @@ import HomeScreen from ".";
 import LiveMatch from "./live-match";
 import Profile from "./profile";
 import Telegram from "./telegram";
-import { HouseIcon, TelegramIcon, ProfileIcon, LiveScoreIcon } from "@/shared/icons";
+import Comments from "./comments";
+import { HouseIcon, TelegramIcon, ProfileIcon, FootballPitchIcon, CommentsIcon } from "@/shared/icons";
 
 const Tab = createBottomTabNavigator();
 
@@ -28,7 +29,7 @@ export default function TabLayout() {
         component={HomeScreen} 
         options={{
           tabBarIcon: ({ focused }) => (
-            <HouseIcon color={focused ? "white" : "gray"} size={29} />
+            <HouseIcon size={21} outline={!focused} />
           )
         }} 
       />
@@ -37,7 +38,7 @@ export default function TabLayout() {
         component={Telegram} 
         options={{
           tabBarIcon: ({ focused }) => (
-            <TelegramIcon color={focused ? "white" : "gray"} size={29} />
+            <TelegramIcon size={21} outline={!focused} />
           )
         }} 
       />
@@ -46,7 +47,16 @@ export default function TabLayout() {
         component={LiveMatch} 
         options={{
           tabBarIcon: ({ focused }) => (
-            <LiveScoreIcon color={focused ? "white" : "gray"} size={29} />
+            <FootballPitchIcon size={21} />
+          )
+        }} 
+      />
+      <Tab.Screen 
+        name="comments" 
+        component={Comments} 
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <CommentsIcon size={21} outline={!focused} />
           )
         }} 
       />
@@ -55,7 +65,7 @@ export default function TabLayout() {
         component={Profile} 
         options={{
           tabBarIcon: ({ focused }) => (
-            <ProfileIcon color={focused ? "white" : "gray"} size={29} />
+            <ProfileIcon size={21} outline={!focused} />
           )
         }} 
       />

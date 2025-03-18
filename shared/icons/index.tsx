@@ -1,55 +1,76 @@
+import React from "react";
 import Svg, { Circle, Line, Path, Rect } from "react-native-svg";
 
-export const HouseIcon = ({ color = "white", size = 24 }) => {
+export const HouseIcon = ({ color = "white", size = 24, outline = false }) => {
     return(
-        <Svg width={size} height={size} fill={color} viewBox="0 0 24 24">
-            <Path fillRule="evenodd" d="M11.293 3.293a1 1 0 0 1 1.414 0l6 6 2 2a1 1 0 0 1-1.414 1.414L19 12.414V19a2 2 0 0 1-2 2h-3a1 1 0 0 1-1-1v-3h-2v3a1 1 0 0 1-1 1H7a2 2 0 0 1-2-2v-6.586l-.293.293a1 1 0 0 1-1.414-1.414l2-2 6-6Z" clipRule="evenodd"/>
+        <Svg width={size} height={size} viewBox="0 0 24 24">
+            {outline ? (
+                <Path stroke={color} strokeWidth="2" fill="none" d="M11.293 3.293a1 1 0 0 1 1.414 0l6 6 2 2a1 1 0 0 1-1.414 1.414L19 12.414V19a2 2 0 0 1-2 2h-3a1 1 0 0 1-1-1v-3h-2v3a1 1 0 0 1-1 1H7a2 2 0 0 1-2-2v-6.586l-.293.293a1 1 0 0 1-1.414-1.414l2-2 6-6Z" />
+            ) : (
+                <Path fill={color} fillRule="evenodd" d="M11.293 3.293a1 1 0 0 1 1.414 0l6 6 2 2a1 1 0 0 1-1.414 1.414L19 12.414V19a2 2 0 0 1-2 2h-3a1 1 0 0 1-1-1v-3h-2v3a1 1 0 0 1-1 1H7a2 2 0 0 1-2-2v-6.586l-.293.293a1 1 0 0 1-1.414-1.414l2-2 6-6Z" clipRule="evenodd"/>
+            )}
         </Svg>
     )
 }
 
-export const SearchIcon = ({ color = "white", size = 24 }) => {
-    return (
-        <Svg width={size} height={size} fill={color} viewBox="0 0 24 24">
-            <Path d="M10 2a8 8 0 1 0 0 16 8 8 0 0 0 0-16Z"/>
-            <Path fillRule="evenodd" d="M21.707 21.707a1 1 0 0 1-1.414 0l-3.5-3.5a1 1 0 0 1 1.414-1.414l3.5 3.5a1 1 0 0 1 0 1.414Z" clipRule="evenodd"/>
-        </Svg>
-    )
-}
-
-export const TelegramIcon = ({ color = "white", size = 24 }) => (
-    <Svg width={size} height={size} viewBox="0 0 16 16" fill={color}>
-      <Path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.287 5.906q-1.168.486-4.666 2.01-.567.225-.595.442c-.03.243.275.339.69.47l.175.055c.408.133.958.288 1.243.294q.39.01.868-.32 3.269-2.206 3.374-2.23c.05-.012.12-.026.166.016s.042.12.037.141c-.03.129-1.227 1.241-1.846 1.817-.193.18-.33.307-.358.336a8 8 0 0 1-.188.186c-.38.366-.664.64.015 1.088.327.216.589.393.85.571.284.194.568.387.936.629q.14.092.27.187c.331.236.63.448.997.414.214-.02.435-.22.547-.82.265-1.417.786-4.486.906-5.751a1.4 1.4 0 0 0-.013-.315.34.34 0 0 0-.114-.217.53.53 0 0 0-.31-.093c-.3.005-.763.166-2.984 1.09"/>
+export const TelegramIcon = ({ color = "white", size = 24, outline = false }) => (
+    <Svg width={size} height={size} viewBox="0 0 24 24">
+        {outline ? (
+            <Path stroke={color} strokeWidth="2" fill="none" d="M22 2L11 13M22 2L15 22L11 13M22 2L2 9L11 13"/>
+        ) : (
+            <Path fill={color} d="M22 2L11 13M22 2L15 22L11 13M22 2L2 9L11 13"/>
+        )}
     </Svg>
 );
 
-export const ProfileIcon = ({ color = "white", size = 24 }) => {
+export const ProfileIcon = ({ color = "white", size = 24, outline = false }) => {
     return (
-        <Svg width={size} height={size} fill={color} viewBox="0 0 16 16">
-            <Path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+        <Svg width={size} height={size} viewBox="0 0 16 16">
+            {outline ? (
+                <Path stroke={color} strokeWidth="2" fill="none" d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+            ) : (
+                <Path fill={color} d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+            )}
         </Svg>
     )
 }
 
-export const LiveScoreIcon = ({ color = "white", size = 24 }) => {
+export const CommentsIcon = ({ color = "white", size = 24, outline = false }) => {
     return (
-      <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-        {/* Outer Rectangle (Football Pitch) */}
-        <Rect x="2" y="4" width="20" height="16" stroke={color} strokeWidth="2" rx="2" />
-        
-        {/* Center Circle */}
-        <Circle cx="12" cy="12" r="3" stroke={color} strokeWidth="2" />
-        
-        {/* Midline */}
-        <Line x1="12" y1="4" x2="12" y2="20" stroke={color} strokeWidth="2" />
-        
-        {/* Left Penalty Area */}
-        <Rect x="2" y="8" width="4" height="8" stroke={color} strokeWidth="2" />
-        <Circle cx="6" cy="12" r="1" fill={color} />
-  
-        {/* Right Penalty Area */}
-        <Rect x="18" y="8" width="4" height="8" stroke={color} strokeWidth="2" />
-        <Circle cx="18" cy="12" r="1" fill={color} />
-      </Svg>
-    );
-  };
+        <Svg width={size} height={size} viewBox="0 0 24 24">
+            {outline ? (
+                <Path stroke={color} strokeWidth="2" fill="none" d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+            ) : (
+                <Path fill={color} d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+            )}
+        </Svg>
+    )
+}
+
+export const FootballPitchIcon = ({ color = "white", size = 24, outline = false }) => {
+    return (
+        <Svg width={size} height={size} viewBox="0 0 24 24">
+            {outline ? (
+                <>
+                    <Rect x="2" y="4" width="20" height="16" stroke={color} strokeWidth="2" fill="none" rx="2" />
+                    <Circle cx="12" cy="12" r="3" stroke={color} strokeWidth="2" fill="none" />
+                    <Line x1="12" y1="4" x2="12" y2="20" stroke={color} strokeWidth="2" />
+                    <Rect x="2" y="8" width="4" height="8" stroke={color} strokeWidth="2" fill="none" />
+                    <Circle cx="6" cy="12" r="1" stroke={color} strokeWidth="2" fill="none" />
+                    <Rect x="18" y="8" width="4" height="8" stroke={color} strokeWidth="2" fill="none" />
+                    <Circle cx="18" cy="12" r="1" stroke={color} strokeWidth="2" fill="none" />
+                </>
+            ) : (
+                <>
+                    <Rect x="2" y="4" width="20" height="16" stroke={color} strokeWidth="2" rx="2" />
+                    <Circle cx="12" cy="12" r="3" stroke={color} strokeWidth="2" />
+                    <Line x1="12" y1="4" x2="12" y2="20" stroke={color} strokeWidth="2" />
+                    <Rect x="2" y="8" width="4" height="8" stroke={color} strokeWidth="2" />
+                    <Circle cx="6" cy="12" r="1" fill={color} />
+                    <Rect x="18" y="8" width="4" height="8" stroke={color} strokeWidth="2" />
+                    <Circle cx="18" cy="12" r="1" fill={color} />
+                </>
+            )}
+        </Svg>
+    )
+}
