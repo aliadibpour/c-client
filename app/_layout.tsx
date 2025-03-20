@@ -7,7 +7,8 @@ import { DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from 'react';
 import { useFonts } from 'expo-font';
-SplashScreen.preventAutoHideAsync();//load font before mount component
+
+SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const MyDarkTheme = {
@@ -37,10 +38,13 @@ export default function RootLayout() {
     <ThemeProvider value={MyDarkTheme}>
       <SafeAreaView style={styles.safeArea}>
         <View style={styles.container}>
-          <View style={styles.contentWrapper} className=" max-w-screen-lg text-white font-vazir">
+          <View style={styles.contentWrapper} className="max-w-screen-lg text-white font-vazir">
             <Stack
               screenOptions={{
-                contentStyle: { backgroundColor: MyDarkTheme.colors.background },
+                contentStyle: { 
+                  backgroundColor: MyDarkTheme.colors.background,
+                  direction: "rtl"
+                }
               }}
             >
               <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
@@ -58,18 +62,15 @@ const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
     backgroundColor: "#141414",
-    direction: "rtl"
   },
   container: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    direction: "rtl"
   },
   contentWrapper: {
     flex: 1,
     width: "100%",
     alignSelf: "center",
-    direction: "rtl"
   },
 });

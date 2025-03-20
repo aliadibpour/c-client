@@ -16,9 +16,19 @@ export const HouseIcon = ({ color = "white", size = 24, outline = false }) => {
 export const TelegramIcon = ({ color = "white", size = 24, outline = false }) => (
     <Svg width={size} height={size} viewBox="0 0 24 24">
         {outline ? (
-            <Path stroke={color} strokeWidth="2" fill="none" d="M22 2L11 13M22 2L15 22L11 13M22 2L2 9L11 13"/>
+            <Path 
+                stroke={color} 
+                strokeWidth="1.5" 
+                strokeLinecap="round" 
+                strokeLinejoin="round"
+                fill="none" 
+                d="M20.665 3.717l-17.73 6.837c-1.21.486-1.203 1.161-.222 1.462l4.552 1.42l10.532-6.645c.498-.303.953-.14.579.192l-8.533 7.701l-.332 4.865c.487 0 .703-.22.975-.48l2.34-2.272l4.867 3.595c.897.494 1.54.24 1.764-.83l3.35-15.778c.343-1.37-.517-1.99-1.542-1.587z"
+            />
         ) : (
-            <Path fill={color} d="M22 2L11 13M22 2L15 22L11 13M22 2L2 9L11 13"/>
+            <Path 
+                fill={color} 
+                d="M20.665 3.717l-17.73 6.837c-1.21.486-1.203 1.161-.222 1.462l4.552 1.42l10.532-6.645c.498-.303.953-.14.579.192l-8.533 7.701l-.332 4.865c.487 0 .703-.22.975-.48l2.34-2.272l4.867 3.595c.897.494 1.54.24 1.764-.83l3.35-15.778c.343-1.37-.517-1.99-1.542-1.587z"
+            />
         )}
     </Svg>
 );
@@ -52,22 +62,22 @@ export const FootballPitchIcon = ({ color = "white", size = 24, outline = false 
         <Svg width={size} height={size} viewBox="0 0 24 24">
             {outline ? (
                 <>
-                    <Rect x="2" y="4" width="20" height="16" stroke={color} strokeWidth="2" fill="none" rx="2" />
-                    <Circle cx="12" cy="12" r="3" stroke={color} strokeWidth="2" fill="none" />
-                    <Line x1="12" y1="4" x2="12" y2="20" stroke={color} strokeWidth="2" />
-                    <Rect x="2" y="8" width="4" height="8" stroke={color} strokeWidth="2" fill="none" />
-                    <Circle cx="6" cy="12" r="1" stroke={color} strokeWidth="2" fill="none" />
-                    <Rect x="18" y="8" width="4" height="8" stroke={color} strokeWidth="2" fill="none" />
-                    <Circle cx="18" cy="12" r="1" stroke={color} strokeWidth="2" fill="none" />
+                    <Rect x="2" y="4" width="20" height="16" stroke={color} strokeWidth="1.2" fill="none" rx="2" />
+                    <Circle cx="12" cy="12" r="3" stroke={color} strokeWidth="1.2" fill="none" />
+                    <Line x1="12" y1="4" x2="12" y2="20" stroke={color} strokeWidth="2.7" />
+                    <Rect x="2" y="8" width="4" height="8" stroke={color} strokeWidth="1.2" fill="none" />
+                    <Circle cx="6" cy="12" r="1" stroke={color} strokeWidth="1.2" fill="none" />
+                    <Rect x="18" y="8" width="4" height="8" stroke={color} strokeWidth="1.2" fill="none" />
+                    <Circle cx="18" cy="12" r="1" stroke={color} strokeWidth="1.2" fill="none" />
                 </>
             ) : (
                 <>
-                    <Rect x="2" y="4" width="20" height="16" stroke={color} strokeWidth="2" rx="2" />
-                    <Circle cx="12" cy="12" r="3" stroke={color} strokeWidth="2" />
-                    <Line x1="12" y1="4" x2="12" y2="20" stroke={color} strokeWidth="2" />
-                    <Rect x="2" y="8" width="4" height="8" stroke={color} strokeWidth="2" />
+                    <Rect x="2" y="4" width="20" height="16" stroke={color} strokeWidth="1.5" rx="2" />
+                    <Circle cx="12" cy="12" r="2" stroke={color} strokeWidth="1.5" />
+                    <Line x1="12" y1="4" x2="12" y2="20" stroke={color} strokeWidth="1.5" />
+                    <Rect x="2" y="8" width="4" height="8" stroke={color} strokeWidth="1.5" />
                     <Circle cx="6" cy="12" r="1" fill={color} />
-                    <Rect x="18" y="8" width="4" height="8" stroke={color} strokeWidth="2" />
+                    <Rect x="18" y="8" width="4" height="8" stroke={color} strokeWidth="1.5" />
                     <Circle cx="18" cy="12" r="1" fill={color} />
                 </>
             )}
