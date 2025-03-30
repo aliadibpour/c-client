@@ -12,13 +12,13 @@ const Tab = createBottomTabNavigator();
 
 export default function TabLayout() {
   const iconSize = Platform.select({
-    web: 19,
-    default: 19,
+    web: 22,
+    default: 22,
   });
 
   const textSize = Platform.select({
-    web: "text-[11px]",
-    default: "text-[11px]",
+    web: "text-[10px]",
+    default: "text-[10px]",
   });
 
   return (
@@ -95,7 +95,7 @@ export default function TabLayout() {
           tabBarIcon: ({ focused }) => (
             <View className="items-center justify-center w-16">
               <FootballPitchIcon size={iconSize} outline={focused} />
-              <Text className={`${textSize} mt-1.5 font-vazir ${focused ? 'text-white' : 'text-white/40'}`}>زنده</Text>
+              <Text className={`${textSize} mt-1.5 font-vazir ${focused ? 'text-white' : 'text-white/40'}`}>بازی ها</Text>
             </View>
           )
         }} 

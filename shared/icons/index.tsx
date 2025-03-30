@@ -16,18 +16,18 @@ export const HouseIcon = ({ color = "white", size = 24, outline = false }) => {
 export const TelegramIcon = ({ color = "white", size = 24, outline = false }) => (
     <Svg width={size} height={size} viewBox="0 0 24 24">
         {outline ? (
-            <Path 
-                stroke={color} 
-                strokeWidth="1.5" 
-                strokeLinecap="round" 
+            <Path
+                stroke={color}
+                strokeWidth="1.4"
+                strokeLinecap="round"
                 strokeLinejoin="round"
-                fill="none" 
-                d="M20.665 3.717l-17.73 6.837c-1.21.486-1.203 1.161-.222 1.462l4.552 1.42l10.532-6.645c.498-.303.953-.14.579.192l-8.533 7.701l-.332 4.865c.487 0 .703-.22.975-.48l2.34-2.272l4.867 3.595c.897.494 1.54.24 1.764-.83l3.35-15.778c.343-1.37-.517-1.99-1.542-1.587z"
+                fill="none"
+                d="M20.665 3.717l-17.73 6.837c-1.21.486-1.203 1.161-.222 1.462l4.552 1.42l10.532-6.645c.498-.303.953-.14.579.192l-8.533 7.701h-.002l.002.001-.314 4.692c.46 0 .663-.211.921-.46l2.211-2.15l4.599 3.397c.848.467 1.457.227 1.668-.785l3.019-14.228c.309-1.239-.473-1.8-1.282-1.434z"
             />
         ) : (
-            <Path 
-                fill={color} 
-                d="M20.665 3.717l-17.73 6.837c-1.21.486-1.203 1.161-.222 1.462l4.552 1.42l10.532-6.645c.498-.303.953-.14.579.192l-8.533 7.701l-.332 4.865c.487 0 .703-.22.975-.48l2.34-2.272l4.867 3.595c.897.494 1.54.24 1.764-.83l3.35-15.778c.343-1.37-.517-1.99-1.542-1.587z"
+            <Path
+                fill={color}
+                d="M20.665 3.717l-17.73 6.837c-1.21.486-1.203 1.161-.222 1.462l4.552 1.42l10.532-6.645c.498-.303.953-.14.579.192l-8.533 7.701h-.002l.002.001-.314 4.692c.46 0 .663-.211.921-.46l2.211-2.15l4.599 3.397c.848.467 1.457.227 1.668-.785l3.019-14.228c.309-1.239-.473-1.8-1.282-1.434z"
             />
         )}
     </Svg>
@@ -37,7 +37,7 @@ export const ProfileIcon = ({ color = "white", size = 24, outline = false }) => 
     return (
         <Svg width={size} height={size} viewBox="0 0 16 16">
             {outline ? (
-                <Path stroke={color} strokeWidth="2" fill="none" d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+                <Path stroke={color} strokeWidth="1" fill="none" d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
             ) : (
                 <Path fill={color} d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
             )}
@@ -57,30 +57,24 @@ export const CommentsIcon = ({ color = "white", size = 24, outline = false }) =>
     )
 }
 
-export const FootballPitchIcon = ({ color = "white", size = 24, outline = false }) => {
-    return (
-        <Svg width={size} height={size} viewBox="0 0 24 24">
-            {outline ? (
-                <>
-                    <Rect x="2" y="4" width="20" height="16" stroke={color} strokeWidth="1.2" fill="none" rx="2" />
-                    <Circle cx="12" cy="12" r="3" stroke={color} strokeWidth="1.2" fill="none" />
-                    <Line x1="12" y1="4" x2="12" y2="20" stroke={color} strokeWidth="2.7" />
-                    <Rect x="2" y="8" width="4" height="8" stroke={color} strokeWidth="1.2" fill="none" />
-                    <Circle cx="6" cy="12" r="1" stroke={color} strokeWidth="1.2" fill="none" />
-                    <Rect x="18" y="8" width="4" height="8" stroke={color} strokeWidth="1.2" fill="none" />
-                    <Circle cx="18" cy="12" r="1" stroke={color} strokeWidth="1.2" fill="none" />
-                </>
-            ) : (
-                <>
-                    <Rect x="2" y="4" width="20" height="16" stroke={color} strokeWidth="1.5" rx="2" />
-                    <Circle cx="12" cy="12" r="2" stroke={color} strokeWidth="1.5" />
-                    <Line x1="12" y1="4" x2="12" y2="20" stroke={color} strokeWidth="1.5" />
-                    <Rect x="2" y="8" width="4" height="8" stroke={color} strokeWidth="1.5" />
-                    <Circle cx="6" cy="12" r="1" fill={color} />
-                    <Rect x="18" y="8" width="4" height="8" stroke={color} strokeWidth="1.5" />
-                    <Circle cx="18" cy="12" r="1" fill={color} />
-                </>
-            )}
-        </Svg>
-    )
-}
+export const FootballPitchIcon = ({ color = "white", size = 24, outline = false }) => (
+    <Svg width={size} height={size} viewBox="0 0 24 24">
+        {outline ? (
+            <>
+                <Rect x="2" y="4" width="20" height="16" fill="white" rx="2" />
+                <Line x1="12" y1="4" x2="12" y2="20" stroke="black" strokeWidth="1.5" />
+                <Circle cx="12" cy="12" r="3.5" stroke="black" strokeWidth="1.5" fill="white" />
+                <Rect x="2" y="8" width="3.5" height="8" stroke="black" strokeWidth="1.5" fill="none" />
+                <Rect x="18.5" y="8" width="3.5" height="8" stroke="black" strokeWidth="1.5" fill="none" />
+            </>
+        ) : (
+            <>
+                <Rect x="2" y="4" width="20" height="16" stroke={color} strokeWidth="1.2" fill="none" rx="2" />
+                <Circle cx="12" cy="12" r="3.5" stroke={color} strokeWidth="1.2" fill="none" />
+                <Line x1="12" y1="4" x2="12" y2="20" stroke={color} strokeWidth="1.2" />
+                <Rect x="2" y="8" width="3.5" height="8" stroke={color} strokeWidth="1.2" fill="none" />
+                <Rect x="18.5" y="8" width="3.5" height="8" stroke={color} strokeWidth="1.2" fill="none" />
+            </>
+        )}
+    </Svg>
+);
