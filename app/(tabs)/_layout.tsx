@@ -1,6 +1,6 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Image, Text, View, Platform } from "react-native";
+import { Text, View, Platform, StyleSheet } from "react-native";
 import HomeScreen from ".";
 import LiveMatch from "./live-match";
 import Profile from "./profile";
@@ -16,40 +16,12 @@ export default function TabLayout() {
     default: 22,
   });
 
-  const textSize = Platform.select({
-    web: "text-[10px]",
-    default: "text-[10px]",
-  });
-
   return (
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
         tabBarShowLabel: false,
-        tabBarStyle: {
-          backgroundColor: "#141414",
-          paddingTop: Platform.select({
-            web: 4,
-            default: 8,
-          }),
-          paddingBottom: Platform.select({
-            web: 4,
-            default: 8,
-          }),
-          height: Platform.select({
-            web: 60,
-            default: 60,
-          }),
-          borderTopWidth: 0,
-          shadowColor: "#000",
-          shadowOffset: {
-            width: 0,
-            height: -4,
-          },
-          shadowOpacity: 0.15,
-          shadowRadius: 6,
-          elevation: 8,
-        },
+        tabBarStyle: styles.tabBar,
       }}
     >
       <Tab.Screen 
@@ -57,9 +29,9 @@ export default function TabLayout() {
         component={HomeScreen} 
         options={{
           tabBarIcon: ({ focused }) => (
-            <View className="items-center justify-center w-16">
+            <View style={styles.iconContainer}>
               <HouseIcon size={iconSize} outline={!focused} />
-              <Text className={`${textSize} mt-1.5 font-vazir ${focused ? 'text-white' : 'text-white/40'}`}>خانه</Text>
+              <Text style={[styles.iconText, focused && styles.activeText]}>خانه</Text>
             </View>
           )
         }} 
@@ -69,9 +41,9 @@ export default function TabLayout() {
         component={Comments} 
         options={{
           tabBarIcon: ({ focused }) => (
-            <View className="items-center justify-center w-16">
+            <View style={styles.iconContainer}>
               <CommentsIcon size={iconSize} outline={!focused} />
-              <Text className={`${textSize} mt-1.5 font-vazir ${focused ? 'text-white' : 'text-white/40'}`}>نظرات</Text>
+              <Text style={[styles.iconText, focused && styles.activeText]}>نظرات</Text>
             </View>
           )
         }} 
@@ -81,9 +53,9 @@ export default function TabLayout() {
         component={Telegram} 
         options={{
           tabBarIcon: ({ focused }) => (
-            <View className="items-center justify-center w-16">
+            <View style={styles.iconContainer}>
               <TelegramIcon size={iconSize} outline={!focused} />
-              <Text className={`${textSize} mt-1.5 font-vazir ${focused ? 'text-white' : 'text-white/40'}`}>تلگرام</Text>
+              <Text style={[styles.iconText, focused && styles.activeText]}>تلگرام</Text>
             </View>
           )
         }} 
@@ -93,9 +65,9 @@ export default function TabLayout() {
         component={LiveMatch} 
         options={{
           tabBarIcon: ({ focused }) => (
-            <View className="items-center justify-center w-16">
+            <View style={styles.iconContainer}>
               <FootballPitchIcon size={iconSize} outline={focused} />
-              <Text className={`${textSize} mt-1.5 font-vazir ${focused ? 'text-white' : 'text-white/40'}`}>بازی ها</Text>
+              <Text style={[styles.iconText, focused && styles.activeText]}>بازی ها</Text>
             </View>
           )
         }} 
@@ -105,9 +77,9 @@ export default function TabLayout() {
         component={Profile} 
         options={{
           tabBarIcon: ({ focused }) => (
-            <View className="items-center justify-center  w-16">
+            <View style={styles.iconContainer}>
               <ProfileIcon size={iconSize} outline={!focused} />
-              <Text className={`${textSize} mt-1.5 font-vazir ${focused ? 'text-white' : 'text-white/40'}`}>پروفایل</Text>
+              <Text style={[styles.iconText, focused && styles.activeText]}>پروفایل</Text>
             </View>
           )
         }} 
@@ -115,3 +87,32 @@ export default function TabLayout() {
     </Tab.Navigator>
   );
 }
+
+const styles = StyleSheet.create({
+  tabBar: {
+    backgroundColor: "#141414",
+    paddingTop: Platform.select({ web: 4, default: 8 }),
+    paddingBottom: Platform.select({ web: 4, default: 8 }),
+    height: Platform.select({ web: 60, default: 60 }),
+    borderTopWidth: 0,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: -4 },
+    shadowOpacity: 0.20,
+    shadowRadius: 6,
+    elevation: 8,
+  },
+  iconContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    width: 64,
+  },
+  iconText: {
+    fontSize: 10,
+    marginTop: 6,
+    color: "rgba(255, 255, 255, 0.4)",
+    fontFamily: "vazir",
+  },
+  activeText: {
+    color: "#ffffff",
+  },
+});

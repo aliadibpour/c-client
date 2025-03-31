@@ -7,6 +7,7 @@ import { DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from 'react';
 import { useFonts } from 'expo-font';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -35,26 +36,28 @@ export default function RootLayout() {
   }
 
   return (
-    <ThemeProvider value={MyDarkTheme}>
-      <SafeAreaView style={styles.safeArea}>
-        <View style={styles.container}>
-          <View style={styles.contentWrapper} className="max-w-screen-lg text-white font-vazir">
-            <Stack
-              screenOptions={{
-                contentStyle: { 
-                  backgroundColor: MyDarkTheme.colors.background,
-                  direction: "rtl"
-                }
-              }}
-            >
-              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-              <Stack.Screen name="+not-found" />
-            </Stack>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <ThemeProvider value={MyDarkTheme}>
+        <SafeAreaView style={styles.safeArea}>
+          <View style={styles.container}>
+            <View style={styles.contentWrapper}>
+              <Stack
+                screenOptions={{
+                  contentStyle: { 
+                    backgroundColor: MyDarkTheme.colors.background,
+                    direction: "rtl"
+                  }
+                }}
+              >
+                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                <Stack.Screen name="+not-found" />
+              </Stack>
+            </View>
+            <StatusBar />
           </View>
-          <StatusBar />
-        </View>
-      </SafeAreaView>
-    </ThemeProvider>
+        </SafeAreaView>
+      </ThemeProvider>
+    </GestureHandlerRootView>
   );
 }
 
@@ -72,5 +75,6 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     alignSelf: "center",
+    maxWidth: 1000,
   },
 });
