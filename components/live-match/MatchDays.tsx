@@ -5,7 +5,7 @@ import { useGlobalSearchParams, useRouter } from "expo-router";
 
 const screenWidth = Dimensions.get("window").width;
 const TOTAL_DAYS = 7;
-const BUTTON_WIDTH = screenWidth / TOTAL_DAYS; 
+const BUTTON_WIDTH = screenWidth / 8; 
 const DEFAULT_INDEX = 2;
 
 const MatchDays: React.FC<any> = () => {
@@ -98,11 +98,12 @@ const MatchDays: React.FC<any> = () => {
                         style={[
                             styles.selectedIndicator,
                             {
-                                left: indicatorPosition,
+                                [I18nManager.isRTL ? "right" : "left"]: (TOTAL_DAYS - selectedDay) * BUTTON_WIDTH,
                                 width: BUTTON_WIDTH,
                             },
                         ]}
                     />
+
                 </View>
             </ScrollView>
         </View>
