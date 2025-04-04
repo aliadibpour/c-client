@@ -3,124 +3,46 @@ import { View, Text, Image, StyleSheet } from 'react-native';
 
 const MatchItem: React.FC<any> = ({ matchList }) => {
   return (
-    <View style={styles.container}>
-      {/* League Header */}
-      <View style={styles.leagueHeader}>
-        <Image source={{ uri: matchList.leagueImage }} style={styles.leagueImage} />
-        <Text style={styles.leagueText}>{matchList.league}</Text>
-      </View>
-
-      {/* Match List */}
-      {matchList.matchList.map((match: any, index: number) => (
-        <View
-          key={index}
-          style={[styles.matchRow, index !== matchList.matchList.length - 1 && styles.matchBorder]}
-        >
-          {/* Home Team */}
-          <View style={styles.teamContainerRight}>
-            <Text style={styles.teamText}>{match.homeTeam}</Text>
-            <Image source={{ uri: match.homeTeamImage || 'http://goo.gl/vyAs27' }} style={styles.teamImage} />
-          </View>
-
-          {/* Score Section */}
-          <View style={styles.scoreContainer}>
-            <Text style={styles.scoreText}>{match.score || '+90'}</Text>
-            {match.matchFinish ? (
-              <Text style={styles.matchFinishText}>{match.matchFinish}</Text>
-            ) : match.matchMinutes ? (
-              <Text style={styles.matchMinutesText}>{match.matchMinutes}</Text>
-            ) : match.matchMinutesAfter90 ? (
-              <Text style={styles.matchMinutesText}>{match.matchMinutesAfter90}</Text>
-            ) : null}
-          </View>
-
-          {/* Away Team */}
-          <View style={styles.teamContainerLeft}>
-            <Image source={{ uri: match.awayTeamImage || 'http://goo.gl/vyAs27' }} style={styles.teamImage} />
-            <Text style={styles.teamText}>{match.awayTeam}</Text>
-          </View>
-        </View>
-      ))}
+    <View className="bg-[#1b1a1a] mb-3 py-4">
+    {/* League Header */}
+    <View className="flex-row gap-1.5 items-center px-4 mb-5">
+      <Image source={{ uri: matchList.leagueImage }} className="w-6 h-6 mr-2" />
+      <Text className="text-white/90 text-xs font-vazir">{matchList.league}</Text>
     </View>
+
+    {/* Match List */}
+    {matchList.matchList.map((match: any, index: number) => (
+      <View
+        key={index}
+        className={`flex-row justify-between px-1 py-4 ${index !== matchList.matchList.length - 1 ? "border-b border-black/5" : ""}`}
+      >
+        {/* Home Team */}
+        <View className="flex-row items-center w-[40%] justify-end">
+          <Text className="text-white/80 text-xs mx-2 font-vazir">{match.homeTeam}</Text>
+          <Image source={{ uri: match.homeTeamImage || "http://goo.gl/vyAs27" }} className="w-7 h-7 rounded-md" />
+        </View>
+
+        {/* Score Section */}
+        <View className="items-center">
+          <Text className="text-white text-sm font-bold">{match.score || "+90"}</Text>
+          {match.matchFinish ? (
+            <Text className="text-white/50 text-[10px] mt-1">{match.matchFinish}</Text>
+          ) : match.matchMinutes ? (
+            <Text className="text-green-500 text-[10px] mt-1">{match.matchMinutes}</Text>
+          ) : match.matchMinutesAfter90 ? (
+            <Text className="text-green-500 text-[10px] mt-1">{match.matchMinutesAfter90}</Text>
+          ) : null}
+        </View>
+
+        {/* Away Team */}
+        <View className="flex-row items-center w-[40%] justify-start">
+          <Image source={{ uri: match.awayTeamImage || "http://goo.gl/vyAs27" }} className="w-7 h-7 rounded-md" />
+          <Text className="text-white/80 text-xs mx-2 font-vazir">{match.awayTeam}</Text>
+        </View>
+      </View>
+    ))}
+  </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#212121',
-    marginBottom: 12,
-    paddingVertical: 16,
-    borderRadius: 12,
-    marginHorizontal: 2,
-  },
-  leagueHeader: {
-    flexDirection: 'row',
-    gap:6,
-    alignItems: 'center',
-    paddingHorizontal: 16,
-    marginBottom: 12,
-  },
-  leagueImage: {
-    width: 24,
-    height: 24,
-    marginRight: 8,
-  },
-  leagueText: {
-    color: 'rgba(255, 255, 255, 0.9)',
-    fontSize: 12,
-    fontFamily:"vazir",
-  },
-  matchRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-  },
-  matchBorder: {
-    borderBottomWidth: 1,
-    borderBottomColor: 'rgba(255, 255, 255, 0.03)',
-  },
-  teamContainerRight: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    width: '40%',
-    justifyContent: 'flex-end',
-  },
-  teamContainerLeft: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    width: '40%',
-    justifyContent: 'flex-start',
-  },
-  teamImage: {
-    width: 28,
-    height: 28,
-    borderRadius: 6,
-  },
-  teamText: {
-    color: 'rgba(255, 255, 255, 0.8)',
-    fontSize: 12,
-    marginHorizontal: 8,
-    fontFamily:"vazir",
-  },
-  scoreContainer: {
-    alignItems: 'center',
-  },
-  scoreText: {
-    color: '#fff',
-    fontSize: 14,
-    fontWeight: 'bold',
-  },
-  matchFinishText: {
-    color: 'rgba(255, 255, 255, 0.5)',
-    fontSize: 10,
-    marginTop: 4,
-  },
-  matchMinutesText: {
-    color: '#22c55e',
-    fontSize: 10,
-    marginTop: 4,
-  },
-});
 
 export default MatchItem;

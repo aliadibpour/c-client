@@ -5,6 +5,5 @@
 @layer base {
   * {
     font-family: 'vazir', sans-serif;
-    @apply text-white;
   }
 }

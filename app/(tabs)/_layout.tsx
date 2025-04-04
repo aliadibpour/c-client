@@ -90,8 +90,8 @@ export default function TabLayout() {
 
 const styles = StyleSheet.create({
   tabBar: {
-    backgroundColor: "#141414",
-    paddingTop: Platform.select({ web: 4, default: 8 }),
+    backgroundColor: "#101010",
+    paddingTop: Platform.select({ web: 4, default: 12 }),
     paddingBottom: Platform.select({ web: 4, default: 8 }),
     height: Platform.select({ web: 60, default: 60 }),
     borderTopWidth: 0,

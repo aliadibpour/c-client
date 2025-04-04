@@ -28,18 +28,17 @@ export default function LiveMatch() {
     [{ nativeEvent: { translationX: translateX } }],
     { useNativeDriver: true }
   );
+
   const handleSwipeEnd = (event: any) => {
     const translationX = event.nativeEvent.translationX;
     let nextDay = currentDay;
-  
+
     if (translationX > 80 && currentDay < 6) {
-      // در RTL: سوایپ به راست → (روز بعد)
       nextDay = currentDay + 1;
     } else if (translationX < -80 && currentDay > 0) {
-      // در RTL: سوایپ به چپ ← (روز قبل)
       nextDay = currentDay - 1;
     }
-  
+
     if (nextDay !== currentDay) {
       Animated.timing(translateX, {
         toValue: translationX > 0 ? width : -width,
@@ -57,29 +56,27 @@ export default function LiveMatch() {
       }).start();
     }
   };
-  
-  
+
   return (
-    <ScrollView>
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <MatchDays />
-      <PanGestureHandler onGestureEvent={handleGestureEvent} onHandlerStateChange={handleSwipeEnd}>
-        <Animated.View style={[styles.animatedView, { transform: [{ translateX }] }]}>
-          {matchList.length ? (
-            matchList.map((match: any) => <MatchItem matchList={match} key={match.league} />)
-          ) : (
-            <Text>Loading...</Text>
-          )}
-        </Animated.View>
-      </PanGestureHandler>
+    <GestureHandlerRootView>
+      <ScrollView>
+        <MatchDays className="w-full h-14" />
+        <PanGestureHandler onGestureEvent={handleGestureEvent} onHandlerStateChange={handleSwipeEnd}>
+          <Animated.View style={[styles.animatedView, { transform: [{ translateX }] }]}>
+            {matchList.length ? (
+              matchList.map((match: any) => <MatchItem matchList={match} key={match.league} />)
+            ) : (
+              <Text className="text-white text-center mt-4">Loading...</Text>
+            )}
+          </Animated.View>
+        </PanGestureHandler>
+      </ScrollView>
     </GestureHandlerRootView>
-    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   animatedView: {
-    flex: 1,
     width: "100%",
   },
 });

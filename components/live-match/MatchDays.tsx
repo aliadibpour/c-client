@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Animated, PanResponder, Dimensions, I18nManager } from "react-native";
+import { View, Text, ScrollView, TouchableOpacity, Animated, PanResponder, Dimensions, I18nManager } from "react-native";
 import { dateDiplayFormat, dateFormat } from "@/shared/helpers";
 import { useGlobalSearchParams, useRouter } from "expo-router";
 
@@ -16,9 +16,7 @@ const MatchDays: React.FC<any> = () => {
     const [days, setDays] = useState<any[]>([]);
     const router = useRouter();
     const { day } = useGlobalSearchParams();
-
     const [selectedDay, setSelectedDay] = useState<number>(+day);
-
     const scrollViewRef = useRef<ScrollView>(null);
     const indicatorPosition = useRef(new Animated.Value(selectedDay * BUTTON_WIDTH)).current;
 
@@ -34,115 +32,59 @@ const MatchDays: React.FC<any> = () => {
             });
         }
         setDays(d);
-        scrollToDay(selectedDay);
+        //scrollToDay(selectedDay);
     }, []);
 
     useEffect(() => {
         if (day) {
             const newIndex = +day;
             setSelectedDay(newIndex);
-            moveIndicator(newIndex);
-            scrollToDay(newIndex);
+            //moveIndicator(newIndex);
+            ///scrollToDay(newIndex);
         }
     }, [day]);
 
-    function moveIndicator(dayIndex: number) {
-        Animated.spring(indicatorPosition, {
-            toValue: dayIndex * BUTTON_WIDTH,
-            useNativeDriver: false,
-        }).start();
-    }
+    // function moveIndicator(dayIndex: number) {
+    //     Animated.spring(indicatorPosition, {
+    //         toValue: dayIndex * BUTTON_WIDTH,
+    //         useNativeDriver: false,
+    //     }).start();
+    // }
 
-    function selectDay(dayIndex: number) {
-        setSelectedDay(dayIndex);
-        moveIndicator(dayIndex);
-        router.push({ pathname: "/live-match", params: { day: dayIndex.toString() } });
-        scrollToDay(dayIndex);
-    }
 
-    function scrollToDay(dayIndex: number) {
-        if (scrollViewRef.current) {
-            const position = Math.max(0, dayIndex * BUTTON_WIDTH - screenWidth / 2 + BUTTON_WIDTH / 2);
-            scrollViewRef.current.scrollTo({ x: position, animated: true });
-        }
-    }
+    // function scrollToDay(dayIndex: number) {
+    //     if (scrollViewRef.current) {
+    //         const position = Math.max(0, dayIndex * BUTTON_WIDTH - screenWidth / 2 + BUTTON_WIDTH / 2);
+    //         scrollViewRef.current.scrollTo({ x: position , animated: true });
+    //     }
+    // }
 
-    const panResponder = PanResponder.create({
-        onMoveShouldSetPanResponder: (_, gestureState) => Math.abs(gestureState.dx) > 10,
-        onPanResponderRelease: (_, gestureState) => {
-            if (gestureState.dx > 50 && selectedDay > 0) {
-                selectDay(selectedDay + 1);
-            } else if (gestureState.dx < -50 && selectedDay < TOTAL_DAYS - 1) {
-                selectDay(selectedDay - 1);
-            }
-        },
-    });
 
     return (
-        <View style={styles.container} {...panResponder.panHandlers} >
-            <ScrollView
-                ref={scrollViewRef}
-                horizontal={true}
-                showsHorizontalScrollIndicator={false}
-                contentContainerStyle={styles.scrollContainer}
-            >
-                <View style={styles.daysRow}>
+        <View className="py-2 overflow-auto bg-[#1b1a1a] mb-3 border-1 border-b-white/5" >
+                <View className={`relative flex-row`}>
                     {days.map((day, index: number) => (
-                        <TouchableOpacity key={day.date} onPress={() => selectDay(index)} style={[styles.dayButton, { width: BUTTON_WIDTH }]}>
-                            <Text style={[styles.dayText, selectedDay === index && styles.selectedDayText]}>
+                        <TouchableOpacity 
+                            key={day.date} 
+                            onPress={() => router.push({ pathname: "/live-match", params: { day: index.toString() } })}
+                            className="py-3 items-center justify-center"
+                            style={{ width: BUTTON_WIDTH }}
+                        >
+                            <Text className={`text-white text-sm ${selectedDay === index ? "opacity-100" : "opacity-70"} font-vazir`}>
                                 {day.weekday === today ? "امروز" : day.weekday === yesterday ? "دیروز" : day.weekday === tomorrow ? "فردا" : day.weekday}
                             </Text>
                         </TouchableOpacity>
                     ))}
                     <Animated.View
-                        style={[
-                            styles.selectedIndicator,
-                            {
-                                [I18nManager.isRTL ? "right" : "left"]: (TOTAL_DAYS - selectedDay) * BUTTON_WIDTH,
-                                width: BUTTON_WIDTH,
-                            },
-                        ]}
+                        className="absolute bottom-0 h-[3px] bg-white"
+                        style={{
+                            width: BUTTON_WIDTH,
+                            "right": (TOTAL_DAYS - selectedDay) * BUTTON_WIDTH,
+                        }}
                     />
-
                 </View>
-            </ScrollView>
         </View>
     );
 };
-
-const styles = StyleSheet.create({
-    container: {
-        paddingVertical: 8,
-        width: "100%",
-    },
-    scrollContainer: {
-        paddingHorizontal: 0,
-    },
-    daysRow: {
-        flexDirection: I18nManager.isRTL ? "row-reverse" : "row",
-        position: "relative",
-        width: screenWidth,
-    },
-    dayButton: {
-        paddingVertical: 16,
-        alignItems: "center",
-        justifyContent: "center",
-    },
-    dayText: {
-        color: "white",
-        fontSize: 14,
-        opacity: 0.7,
-        fontFamily: "vazir",
-    },
-    selectedDayText: {
-        opacity: 1,
-    },
-    selectedIndicator: {
-        position: "absolute",
-        bottom: 0,
-        height: 3,
-        backgroundColor: "white",
-    },
-});
 
 export default MatchDays;
