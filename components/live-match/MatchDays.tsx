@@ -61,7 +61,7 @@ const MatchDays: React.FC<any> = () => {
 
 
     return (
-        <View className="py-2 overflow-auto bg-[#1b1a1a] mb-3 border-1 border-b-white/5" >
+        <View className="py-2 overflow-auto bg-[#1f1f1f] mb-5" >
                 <View className={`relative flex-row`}>
                     {days.map((day, index: number) => (
                         <TouchableOpacity 
@@ -70,7 +70,8 @@ const MatchDays: React.FC<any> = () => {
                             className="py-3 items-center justify-center"
                             style={{ width: BUTTON_WIDTH }}
                         >
-                            <Text className={`text-white text-sm ${selectedDay === index ? "opacity-100" : "opacity-70"} font-vazir`}>
+                            <Text className={`text-white text-sm ${selectedDay === index ? "opacity-100" : "opacity-70"}
+                             font-vazir text-nowrap`}>
                                 {day.weekday === today ? "امروز" : day.weekday === yesterday ? "دیروز" : day.weekday === tomorrow ? "فردا" : day.weekday}
                             </Text>
                         </TouchableOpacity>
@@ -79,7 +80,7 @@ const MatchDays: React.FC<any> = () => {
                         className="absolute bottom-0 h-[3px] bg-white"
                         style={{
                             width: BUTTON_WIDTH,
-                            "right": (TOTAL_DAYS - selectedDay) * BUTTON_WIDTH,
+                            "left": (TOTAL_DAYS - selectedDay) * BUTTON_WIDTH,
                         }}
                     />
                 </View>

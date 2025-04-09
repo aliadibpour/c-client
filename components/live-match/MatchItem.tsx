@@ -3,7 +3,7 @@ import { View, Text, Image, StyleSheet } from 'react-native';
 
 const MatchItem: React.FC<any> = ({ matchList }) => {
   return (
-    <View className="bg-[#1b1a1a] mb-3 py-4">
+    <View className="bg-[#1f1f1f] mb-3 py-4">
     {/* League Header */}
     <View className="flex-row gap-1.5 items-center px-4 mb-5">
       <Image source={{ uri: matchList.leagueImage }} className="w-6 h-6 mr-2" />
@@ -19,7 +19,7 @@ const MatchItem: React.FC<any> = ({ matchList }) => {
         {/* Home Team */}
         <View className="flex-row items-center w-[40%] justify-end">
           <Text className="text-white/80 text-xs mx-2 font-vazir">{match.homeTeam}</Text>
-          <Image source={{ uri: match.homeTeamImage || "http://goo.gl/vyAs27" }} className="w-7 h-7 rounded-md" />
+          <Image source={{ uri: match.homeTeamImage || "http://goo.gl/vyAs27" }} className="w-8 h-8 rounded-md" />
         </View>
 
         {/* Score Section */}
@@ -36,7 +36,7 @@ const MatchItem: React.FC<any> = ({ matchList }) => {
 
         {/* Away Team */}
         <View className="flex-row items-center w-[40%] justify-start">
-          <Image source={{ uri: match.awayTeamImage || "http://goo.gl/vyAs27" }} className="w-7 h-7 rounded-md" />
+          <Image source={{ uri: match.awayTeamImage || "http://goo.gl/vyAs27" }} className="w-8 h-8 rounded-md" />
           <Text className="text-white/80 text-xs mx-2 font-vazir">{match.awayTeam}</Text>
         </View>
       </View>

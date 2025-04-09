@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Animated, Text, StyleSheet, View, Dimensions } from "react-native";
-import { PanGestureHandler, GestureHandlerRootView, ScrollView } from "react-native-gesture-handler";
+import { Animated, Text, StyleSheet, View, Dimensions, FlatList } from "react-native";
+import { PanGestureHandler, GestureHandlerRootView } from "react-native-gesture-handler";
 import { useGlobalSearchParams, useRouter } from "expo-router";
 import { io } from "socket.io-client";
 import MatchItem from "@/components/live-match/MatchItem";
 import MatchDays from "@/components/live-match/MatchDays";
 
 const { width } = Dimensions.get("window");
+
+// اتصال به سرور Socket.io
 const socket = io("http://172.22.32.1:3000/");
 
 export default function LiveMatch() {
@@ -17,6 +19,7 @@ export default function LiveMatch() {
   const [matchList, setMatchList] = useState<any>([]);
   const translateX = useState(new Animated.Value(0))[0];
 
+  // گرفتن اطلاعات مسابقات زنده هنگام بارگذاری یا تغییر روز
   useEffect(() => {
     translateX.setValue(0);
     socket.emit("live-match", currentDay, (response: any) => {
@@ -24,11 +27,13 @@ export default function LiveMatch() {
     });
   }, [currentDay]);
 
+  // مدیریت حرکت انگشت کاربر (Gesture)
   const handleGestureEvent = Animated.event(
     [{ nativeEvent: { translationX: translateX } }],
     { useNativeDriver: true }
   );
 
+  // پایان سوایپ و تغییر روز
   const handleSwipeEnd = (event: any) => {
     const translationX = event.nativeEvent.translationX;
     let nextDay = currentDay;
@@ -59,18 +64,26 @@ export default function LiveMatch() {
 
   return (
     <GestureHandlerRootView>
-      <ScrollView>
+      <View>
+        {/* کامپوننت روزهای مسابقه */}
         <MatchDays className="w-full h-14" />
+
         <PanGestureHandler onGestureEvent={handleGestureEvent} onHandlerStateChange={handleSwipeEnd}>
           <Animated.View style={[styles.animatedView, { transform: [{ translateX }] }]}>
             {matchList.length ? (
-              matchList.map((match: any) => <MatchItem matchList={match} key={match.league} />)
+              // استفاده از FlatList برای نمایش لیست مسابقات
+              <FlatList
+                data={matchList}
+                keyExtractor={(item) => item.league}
+                renderItem={({ item }) => <MatchItem matchList={item} />}
+                contentContainerStyle={styles.scrollContent}
+              />
             ) : (
-              <Text className="text-white text-center mt-4">Loading...</Text>
+              <Text className="text-white text-center mt-4">در حال بارگذاری...</Text>
             )}
           </Animated.View>
         </PanGestureHandler>
-      </ScrollView>
+      </View>
     </GestureHandlerRootView>
   );
 }
@@ -78,5 +91,8 @@ export default function LiveMatch() {
 const styles = StyleSheet.create({
   animatedView: {
     width: "100%",
+  },
+  scrollContent: {
+    paddingBottom: 100,
   },
 });
