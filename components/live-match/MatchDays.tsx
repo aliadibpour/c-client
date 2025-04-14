@@ -44,7 +44,7 @@ const MatchDays = () => {
       const newIndex = +day;
       setSelectedDay(newIndex);
       scrollViewRef.current?.scrollTo({
-        x: newIndex * 95 - screenWidth / 2 + 47,
+        x: newIndex * -95 - screenWidth / 2 - 47,
         animated: true,
       });
     }
@@ -57,7 +57,7 @@ const MatchDays = () => {
         horizontal
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={{
-          flexDirection: I18nManager.isRTL ? "row-reverse" : "row",
+          direction:"rtl",
           paddingHorizontal: 12,
         }}
       >

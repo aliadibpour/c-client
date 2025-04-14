@@ -46,7 +46,7 @@ export default function RootLayout() {
                 screenOptions={{
                   contentStyle: { 
                     backgroundColor: MyDarkTheme.colors.background,
-                    direction: "rtl"
+                    //direction: "rtl"
                   }
                 }}
               >
