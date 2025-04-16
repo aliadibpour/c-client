@@ -1,7 +1,16 @@
-export const dateDiplayFormat = ({ date, format, locale }: { date: string; format?: "weekDayNumber" | "m" | "d" | "HH:mm"| "dd mm"| "ddd dd mm"| "ddd dd mm yyyy" | "dd mm yyyy" | "yyyy/mm/dd" | "YYYY-MM-DD" | "yyyy/mm/dd h:m" , locale?: string }): string => {
+export const dateDiplayFormat = ({ date, format, locale }: { date: string; format?: "weekDayNumber" | "weekDay" | "m" | "d" | "HH:mm"| "dd mm"| "ddd dd mm"| "ddd dd mm yyyy" | "dd mm yyyy" | "yyyy/mm/dd" | "YYYY-MM-DD" | "yyyy/mm/dd h:m" , locale?: string }): string => {
 
     if (!date) return "";
 
+    const persianWeekdays = [
+        'یک‌شنبه',
+        'دوشنبه',
+        'سه‌شنبه',
+        'چهارشنبه',
+        'پنج‌شنبه',
+        'جمعه',
+        'شنبه'
+    ];
     const dateObject = new Date(date);
     const day = dateObject.toLocaleString(locale, { day: "numeric" });
     const weekDay = dateObject.toLocaleString(locale, { weekday: 'short' });
@@ -26,6 +35,10 @@ export const dateDiplayFormat = ({ date, format, locale }: { date: string; forma
 
     if (format === "dd mm yyyy") {
         return (`${day} ${month} ${year}`)
+    }
+
+    if (format == "weekDay") {
+        return persianWeekdays[weekDayNumber]
     }
 
     if (format === "yyyy/mm/dd") {

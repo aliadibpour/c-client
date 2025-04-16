@@ -1,0 +1,15 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useRouter } from 'expo-router';
+import { useEffect } from 'react';
+import { View, Text, Button } from 'react-native';
+
+export default function IntroScreen() {
+  const router = useRouter();
+  useEffect(() =>{console.log(AsyncStorage.getItem("jwt"))},[])
+  return (
+    <View>
+      <Text>select-teams</Text>
+      <Button title="شروع" onPress={() => router.push("./login")} />
+    </View>
+  );
+}

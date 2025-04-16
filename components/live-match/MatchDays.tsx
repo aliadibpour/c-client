@@ -11,13 +11,22 @@ import { useGlobalSearchParams, useRouter } from "expo-router";
 import { dateDiplayFormat, dateFormat } from "@/shared/helpers";
 
 const screenWidth = Dimensions.get("window").width;
-const TOTAL_DAYS = 7;
+const TOTAL_DAYS = 9;
 const DEFAULT_INDEX = 2;
 
 const MatchDays = () => {
-  const today = dateDiplayFormat({ date: dateFormat(new Date()), locale: "fa", format: "ddd dd mm" });
-  const tomorrow = dateDiplayFormat({ date: dateFormat(new Date(Date.now() + 864e5)), locale: "fa", format: "ddd dd mm" });
-  const yesterday = dateDiplayFormat({ date: dateFormat(new Date(Date.now() - 864e5)), locale: "fa", format: "ddd dd mm" });
+  const today = {
+    weekDay: dateDiplayFormat({ date: dateFormat(new Date()), locale: "fa", format: "weekDay" }),
+    dayNumber: dateDiplayFormat({ date: dateFormat(new Date()), locale: "fa", format: "d" })
+  }
+  const tomorrow = {
+    weekDay: dateDiplayFormat({ date: dateFormat(new Date(Date.now() + 864e5)), locale: "fa", format: "weekDay" }),
+    dayNumber: dateDiplayFormat({ date: dateFormat(new Date(Date.now() + 864e5)), locale: "fa", format: "d" })
+  }
+  const yesterday = {
+    weekDay: dateDiplayFormat({ date: dateFormat(new Date(Date.now() - 864e5)), locale: "fa", format: "weekDay" }),
+    dayNumber: dateDiplayFormat({ date: dateFormat(new Date(Date.now() - 864e5)), locale: "fa", format: "d" })
+  }
 
   const [days, setDays] = useState<any[]>([]);
   const router = useRouter();
@@ -27,16 +36,17 @@ const MatchDays = () => {
 
   useEffect(() => {
     const d: any[] = [];
-    for (let i = 0; i < TOTAL_DAYS; i++) {
+    for (let i = -2; i < TOTAL_DAYS; i++) {
       const date = new Date();
       date.setDate(date.getDate() + i - DEFAULT_INDEX);
       d.push({
-        weekday: dateDiplayFormat({ date: dateFormat(date), locale: "fa", format: "ddd dd mm" }),
-        date: dateDiplayFormat({ date: dateFormat(date) }),
-        index: i,
+        weekday: dateDiplayFormat({ date: dateFormat(date), locale: "fa", format: "weekDay" }),
+        dayNumber: dateDiplayFormat({ date: dateFormat(date), locale: "fa", format: "d" }),
       });
     }
     setDays(d);
+    console.log(d);
+    
   }, []);
 
   useEffect(() => {
@@ -51,23 +61,23 @@ const MatchDays = () => {
   }, [day]);
 
   return (
-    <View className="bg-[#1f1f1f] py-2">
+    <View className="py-3">
       <ScrollView
         ref={scrollViewRef}
         horizontal
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={{
           direction:"rtl",
-          paddingHorizontal: 12,
+          margin:"auto"
         }}
       >
         {days.map((d, index) => {
           const label =
-            d.weekday === today
+            d.weekday === today.weekDay
               ? "امروز"
-              : d.weekday === yesterday
+              : d.weekday === yesterday.weekDay
               ? "دیروز"
-              : d.weekday === tomorrow
+              : d.weekday === tomorrow.weekDay
               ? "فردا"
               : d.weekday;
 
@@ -77,14 +87,17 @@ const MatchDays = () => {
               onPress={() => {
                 router.push({ pathname: "/live-match", params: { day: index.toString() } });
               }}
-              className={`mx-2 px-3 py-2 border-b-2 ${selectedDay === index ? "border-white" : "border-transparent"}`}
-              style={{ minWidth: 85, alignItems: "center" }}
+              className={`mx-2 py-2 ${selectedDay === index ? "bg-zinc-700 rounded-lg" : ""}`}
+              style={{ minWidth: 45, alignItems: "center" }}
             >
               <Text
-                className={`text-sm font-vazir text-white ${selectedDay === index ? "opacity-100" : "opacity-60"}`}
+                className={`text-xs font-vazir text-white ${selectedDay === index ? "opacity-100" : ""}`}
                 numberOfLines={1}
               >
                 {label}
+              </Text>
+              <Text className="text-white">
+                {d.dayNumber}
               </Text>
             </TouchableOpacity>
           );
