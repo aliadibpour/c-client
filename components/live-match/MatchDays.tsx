@@ -87,8 +87,8 @@ const MatchDays = () => {
               onPress={() => {
                 router.push({ pathname: "/live-match", params: { day: index.toString() } });
               }}
-              className={`mx-2 py-2 ${selectedDay === index ? "bg-zinc-700 rounded-lg" : ""}`}
-              style={{ minWidth: 45, alignItems: "center" }}
+              className={`mx-2 py-2 min-w-22 max-md:min-w-12 ${selectedDay === index ? "bg-zinc-700 rounded-lg" : ""}`}
+              style={{ alignItems: "center" }}
             >
               <Text
                 className={`text-xs font-vazir text-white ${selectedDay === index ? "opacity-100" : ""}`}

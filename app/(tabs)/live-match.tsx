@@ -21,7 +21,7 @@ import MatchSkeleton from "@/components/live-match/MatchSkeleton";
 
 const { width } = Dimensions.get("window");
 
-const socket = io("http://192.168.1.104:3000/");
+const socket = io("http://172.26.144.1:3000/");
 export default function LiveMatch() {
   const router = useRouter();
   const flatListRef = useRef(null);
