@@ -12,7 +12,8 @@
     },
     "android": {
       "adaptiveIcon": {
-        "backgroundColor": "#222222"
+        "backgroundColor": "#222222",
+        "color": "white"
       },
       "package": "com.anonymous.myapp"
     },

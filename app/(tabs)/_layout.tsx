@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Text, View, Platform, StyleSheet } from "react-native";
 import HomeScreen from ".";
@@ -7,6 +7,8 @@ import Profile from "./profile";
 import Telegram from "./telegram";
 import Comments from "./comments";
 import { HouseIcon, TelegramIcon, ProfileIcon, FootballPitchIcon, CommentsIcon } from "@/shared/icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Redirect } from "expo-router";
 
 const Tab = createBottomTabNavigator();
 
@@ -15,7 +17,22 @@ export default function TabLayout() {
     web: 22,
     default: 22,
   });
+  const [isAuth, setIsAuth] = useState<boolean | null>(null);
 
+  useEffect(() => {
+    const checkAuth = async () => {
+      const jwt = await AsyncStorage.getItem("jwt");
+      setIsAuth(!!jwt);
+    };
+
+    checkAuth();
+  }, []);
+
+  if (isAuth === null) return null;
+
+  if (!isAuth) {
+    return <Redirect href="/(auth)/intro" />;
+  }
   return (
     <Tab.Navigator
       screenOptions={{
