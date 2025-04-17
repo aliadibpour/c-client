@@ -8,8 +8,8 @@ export default function IntroScreen() {
   useEffect(() =>{console.log(AsyncStorage.getItem("jwt"))},[])
   return (
     <View>
-      <Text>select-teams</Text>
-      <Button title="شروع" onPress={() => router.push("./login")} />
+      <Text>خوش اومدی!</Text>
+      <Button title="seklect-teams" onPress={() => router.push("/(tabs)")} />
     </View>
   );
 }

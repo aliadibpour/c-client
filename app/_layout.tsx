@@ -13,7 +13,7 @@ SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
-    'vazir': require('./../assests/fonts/vazir-font-v16.1.0/Vazir.ttf'),
+    'vazir': require('./../assets/fonts/vazir-font-v16.1.0/Vazir.ttf'),
   });
 
   useEffect(() => {

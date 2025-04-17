@@ -7,7 +7,7 @@ export default function VerifyScreen() {
   return (
     <View>
       <Text>کد تأیید رو وارد کن</Text>
-      <Button title="تأیید و ورود" onPress={() => router.push("/(tabs)")} />
+      <Button title="تأیید و ورود" onPress={() => router.push("/(setup)/pick-teams")} />
     </View>
   );
 }
