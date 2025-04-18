@@ -1,8 +1,14 @@
-
-import { useRouter } from 'expo-router';
 import React, { useRef, useState } from 'react';
-import { View, Text, Image, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
-import AppIntroSlider from 'react-native-app-intro-slider';
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  Dimensions,
+  TouchableOpacity,
+  Animated,
+} from 'react-native';
+import { useRouter } from 'expo-router';
 
 const { width } = Dimensions.get('window');
 
@@ -27,68 +33,77 @@ const slides = [
   },
 ];
 
-export default function IntroScreen({ navigation }: any) {
+export default function IntroScreen() {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const sliderRef = useRef<any>(null);
-  const router = useRouter()
-  const handleDone = () => {
-    router.push("/(auth)/login")
+  const blackOverlay = useRef(new Animated.Value(0)).current;
+  const router = useRouter();
+
+  const handleNext = () => {
+    if (currentIndex === slides.length - 1) {
+      router.push("/(auth)/login");
+    } else {
+      // Fade to black
+      Animated.timing(blackOverlay, {
+        toValue: 1,
+        duration: 200,
+        useNativeDriver: true,
+      }).start(() => {
+        setCurrentIndex(prev => prev + 1);
+
+        // Fade back from black
+        Animated.timing(blackOverlay, {
+          toValue: 0,
+          duration: 200,
+          useNativeDriver: true,
+        }).start();
+      });
+    }
   };
 
-  const renderItem = ({ item }: any) => (
-    <View style={styles.slide}>
-      <Image source={item.image} style={styles.image} resizeMode="cover" />
-      <Text style={styles.title}>{item.title}</Text>
-      <Text style={styles.text}>{item.text}</Text>
-    </View>
-  );
-
-  const renderButton = () => {
-    return (
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => {
-          if (currentIndex === slides.length - 1) {
-            handleDone();
-          } else {
-            const nextIndex = currentIndex + 1;
-            sliderRef.current?.goToSlide(nextIndex, true);
-            setCurrentIndex(nextIndex);
-          }
-        }}
-      >
-        <Text style={styles.buttonText}>
-          {currentIndex === slides.length - 1 ? 'شروع' : 'بعدی'}
-        </Text>
-      </TouchableOpacity>
-    );
-  };
+  const slide = slides[currentIndex];
 
   return (
-    <View style={{ flex: 1 }}>
-      <AppIntroSlider
-        ref={sliderRef}
-        data={slides}
-        renderItem={renderItem}
-        showSkipButton={false}
-        showNextButton={false}
-        showDoneButton={false}
-        dotStyle={{ backgroundColor: '#ccc' }}
-        activeDotStyle={{ backgroundColor: '#007AFF' }}
-        onSlideChange={(newIndex) => {
-          if (newIndex < currentIndex) {
-            // Prevent going back
-            sliderRef.current?.goToSlide(currentIndex, false);
-          } else {
-            setCurrentIndex(newIndex);
-          }
-        }}
+    <View style={{ flex: 1, backgroundColor: '#fff' }}>
+      {/* Main Slide Content */}
+      <View style={styles.slide}>
+        <Image source={slide.image} style={styles.image} resizeMode="cover" />
+        <Text style={styles.title}>{slide.title}</Text>
+        <Text style={styles.text}>{slide.text}</Text>
+      </View>
+
+      {/* Dots */}
+      <View style={styles.dotsContainer}>
+        {slides.map((_, index) => (
+          <View
+            key={index}
+            style={[
+              styles.dot,
+              currentIndex === index && styles.activeDot
+            ]}
+          />
+        ))}
+      </View>
+
+      {/* Button */}
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity onPress={handleNext} style={styles.button}>
+          <Text style={styles.buttonText}>
+            {currentIndex === slides.length - 1 ? 'شروع' : 'بعدی'}
+          </Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* Black Fade Overlay */}
+      <Animated.View
+        pointerEvents="none"
+        style={[
+          StyleSheet.absoluteFillObject,
+          {
+            backgroundColor: 'black',
+            opacity: blackOverlay,
+          },
+        ]}
       />
-      <View 
-        style={styles.buttonContainer} 
-        >
-          {renderButton()}
-        </View>
     </View>
   );
 }
@@ -121,19 +136,36 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: '#007AFF',
-    paddingVertical: 7,
+    paddingVertical: 8,
     paddingHorizontal: 20,
-    borderRadius: 4,
+    borderRadius: 6,
+    alignSelf: 'center',
   },
   buttonText: {
     color: '#fff',
     fontSize: 18,
-    margin:"auto"
   },
   buttonContainer: {
     position: 'absolute',
     bottom: 60,
-    alignSelf: 'center',
-    width:"100%",
+    width: '100%',
+  },
+  dotsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    position: 'absolute',
+    bottom: 100,
+    left: 0,
+    right: 0,
+  },
+  dot: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    backgroundColor: '#ccc',
+    margin: 5,
+  },
+  activeDot: {
+    backgroundColor: '#007AFF',
   },
 });
