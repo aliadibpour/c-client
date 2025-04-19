@@ -9,6 +9,7 @@ import {
   Animated,
 } from 'react-native';
 import { useRouter } from 'expo-router';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const { width } = Dimensions.get('window');
 
@@ -17,19 +18,19 @@ const slides = [
     key: 'slide1',
     title: 'ستاره‌های جوان',
     text: 'مجموعه‌ای از بازیکنان خاص ایران و اروپا در دوران جوانی',
-    image: require('../../assets/ss.png'),
+    image: require('../../assets/ww.jpg'),
   },
   {
     key: 'slide2',
     title: 'لحظه‌های تاریخی',
     text: 'تصاویر تاریخی و بامزه از فوتبال دنیا',
-    image: require('../../assets/ss.png'),
+    image: require('../../assets/qq.jpg'),
   },
   {
     key: 'slide3',
     title: 'نتایج خاص',
     text: 'نتایج به‌یادماندنی و جذاب تاریخ فوتبال',
-    image: require('../../assets/ss.png'),
+    image: require('../../assets/ww.jpg'),
   },
 ];
 
@@ -42,15 +43,12 @@ export default function IntroScreen() {
     if (currentIndex === slides.length - 1) {
       router.push("/(auth)/login");
     } else {
-      // Fade to black
       Animated.timing(blackOverlay, {
         toValue: 1,
         duration: 200,
         useNativeDriver: true,
       }).start(() => {
         setCurrentIndex(prev => prev + 1);
-
-        // Fade back from black
         Animated.timing(blackOverlay, {
           toValue: 0,
           duration: 200,
@@ -63,12 +61,22 @@ export default function IntroScreen() {
   const slide = slides[currentIndex];
 
   return (
-    <View style={{ flex: 1, backgroundColor: '#fff' }}>
-      {/* Main Slide Content */}
+    <View style={{ flex: 1 }}>
       <View style={styles.slide}>
-        <Image source={slide.image} style={styles.image} resizeMode="cover" />
-        <Text style={styles.title}>{slide.title}</Text>
-        <Text style={styles.text}>{slide.text}</Text>
+        {/* Image with gradient overlay */}
+        <View style={styles.imageContainer}>
+          <Image source={slide.image} style={styles.image} resizeMode="cover" />
+          <LinearGradient
+            colors={['transparent', 'rgba(0,0,0,0.7)', 'black']}
+            style={styles.gradientOverlay}
+          />
+        </View>
+
+        {/* Title and text */}
+        <View style={styles.titleContainer}>
+          <Text style={styles.title}>{slide.title}</Text>
+          <Text style={styles.text}>{slide.text}</Text>
+        </View>
       </View>
 
       {/* Dots */}
@@ -76,10 +84,7 @@ export default function IntroScreen() {
         {slides.map((_, index) => (
           <View
             key={index}
-            style={[
-              styles.dot,
-              currentIndex === index && styles.activeDot
-            ]}
+            style={[styles.dot, currentIndex === index && styles.activeDot]}
           />
         ))}
       </View>
@@ -93,7 +98,7 @@ export default function IntroScreen() {
         </TouchableOpacity>
       </View>
 
-      {/* Black Fade Overlay */}
+      {/* Black fade overlay between transitions */}
       <Animated.View
         pointerEvents="none"
         style={[
@@ -112,60 +117,86 @@ const styles = StyleSheet.create({
   slide: {
     flex: 1,
     alignItems: 'center',
-    paddingTop: 60,
     paddingHorizontal: 20,
-    backgroundColor: '#fff',
+    backgroundColor: 'black',
+  },
+  imageContainer: {
+    width: width,
+    height: 547,
+    justifyContent: 'flex-end',
   },
   image: {
-    width: width - 40,
-    height: 300,
-    borderRadius: 12,
-    marginBottom: 30,
+    width: '100%',
+    height: '100%',
+    position: 'absolute',
+  },
+  gradientOverlay: {
+    position: 'absolute',
+    bottom: 0,
+    width: '100%',
+    height: 90,
+  },
+  titleContainer: {
+    marginTop: -40,
+    backgroundColor: 'transparent',
+    padding: 10,
+    alignItems: 'center',
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 10,
     textAlign: 'center',
-    color: '#222',
+    color: "white",
+    fontFamily: "vazir",
+    textShadowColor: 'rgba(0, 0, 0, 0.7)',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 3,
   },
   text: {
     fontSize: 18,
     textAlign: 'center',
-    color: '#444',
+    color: "white",
+    fontFamily: "vazir",
+    marginTop: 10,
+    textShadowColor: 'rgba(0, 0, 0, 0.6)',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 2,
   },
   button: {
-    backgroundColor: '#007AFF',
+    backgroundColor: 'white',
     paddingVertical: 8,
     paddingHorizontal: 20,
     borderRadius: 6,
+    width: "100%",
     alignSelf: 'center',
   },
   buttonText: {
-    color: '#fff',
+    color: 'black',
     fontSize: 18,
+    textAlign: 'center',
+    fontFamily: "vazir"
   },
   buttonContainer: {
     position: 'absolute',
-    bottom: 60,
+    bottom: 14,
     width: '100%',
   },
   dotsContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
     position: 'absolute',
-    bottom: 100,
+    bottom: 60,
     left: 0,
     right: 0,
   },
   dot: {
-    width: 10,
-    height: 10,
+    width: 7,
+    height: 7,
     borderRadius: 5,
     backgroundColor: '#ccc',
-    margin: 5,
+    margin: 4,
   },
   activeDot: {
-    backgroundColor: '#007AFF',
+    backgroundColor: 'white',
   },
 });

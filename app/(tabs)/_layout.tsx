@@ -31,7 +31,10 @@ export default function TabLayout() {
   if (isAuth === null) return null;
 
   if (!isAuth) {
-    return <Redirect href="/(auth)/intro" />;
+    return (
+      Platform.OS == "web" ? <Redirect href="/(auth)/login" /> : 
+      <Redirect href="/(auth)/intro" />
+    );
   }
   return (
     <Tab.Navigator
