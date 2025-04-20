@@ -67,7 +67,7 @@ export default function IntroScreen() {
         <View style={styles.imageContainer}>
           <Image source={slide.image} style={styles.image} resizeMode="cover" />
           <LinearGradient
-            colors={['transparent', 'rgba(0,0,0,0.7)', 'black']}
+            colors={['transparent', 'rgba(0,0,0,0.77)', 'black']}
             style={styles.gradientOverlay}
           />
         </View>
@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     width: '100%',
-    height: 90,
+    height: 115,
   },
   titleContainer: {
     marginTop: -40,
