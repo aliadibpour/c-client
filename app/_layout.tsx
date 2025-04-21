@@ -30,7 +30,7 @@ export default function RootLayout() {
     ...DefaultTheme,
     colors: {
       ...DefaultTheme.colors,
-      background: "#101010",
+      background: "#0d0d0d",
       text: "#eef0ed",
       color: "white"
     },
@@ -55,7 +55,7 @@ export default function RootLayout() {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: "#101010",
+    backgroundColor: "#0d0d0d",
   },
   container: {
     flex: 1,

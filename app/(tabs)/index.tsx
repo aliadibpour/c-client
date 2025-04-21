@@ -1,40 +1,54 @@
-import { useEffect, useState } from 'react';
-import { Image, View, Text, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import tw from 'twrnc';
+import { FlatList, Image, Text, TouchableOpacity, View } from 'react-native';
+import { MessageCircle } from 'lucide-react-native'; // Comment icon like Instagram
+
+const posts = [
+  {
+    id: '1',
+    channelPhoto: 'https://upload.wikimedia.org/wikipedia/en/0/05/FC_Persepolis_Official_Logo.svg',
+    channelName: 'سرخ تایمز',
+    contentImage: 'https://nournews.ir/media/Photo/25/01/25011101003540_Org.jpg',
+    caption: "🔴 ایران ورزشی:❌❌حسین کنعانی‌زادگان و سروش رفیعی به دلیل درگیری در رختکن توسط اسماعیل کارتال از پرسپولیس کنار گذاشته خواهند شد.",
+    comments: [],
+  },
+  {
+    id: '2',
+    channelPhoto: 'data:image/png;base64,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',
+    channelName: 'EsteghlalPage',
+    contentImage: 'https://adventure.com/wp-content/uploads/2020/02/Tehran-Derby-Photo-credit-Ali-Sharifzade-14-2048x1366.jpg',
+    caption: 'درگیری لشگری با هوادار حروم زاده به چه جراتی اینطوری صحبت می‌کنی ',
+    comments: [],
+  },
+];
 
 export default function HomeScreen() {
-  const [data, setData] = useState<any>([])
-  useEffect(() => {
-    // axios.get("http://192.168.1.101:3000/").then(res => {
-    //   setData(res.data)
-    //   console.log(data);
-    // } 
-    //)
-  },[])
   return (
-    <SafeAreaView style={tw`flex text-black justify-center items-center flex-1`}>
-      <ScrollView style={{ flex: 1 }}>
-      <Text className='text-red-700 text-lg'>corner</Text>
-      <Text className='text-blue-800 text-xs'>corner</Text>
-      <Text>corner</Text>
-        {/* {
-          data?.map((item:any, index:number) => 
-          <View style={tw`justify-items-start bg-gray-900 mb-3 rounded-lg pb-2 m-2`} key={index}>
-            {
-              item.messagePhoto !== null ?
-              <Image 
-              style={tw`w-full rounded-lg h-58`}
-              source={
-                {uri: item.messagePhoto}
-                }/> : 
-                null
-            }
-            <Text style={tw`text-sm w-fit text-white p-3`}>{item.messageText}</Text>
+    <SafeAreaView className="flex-1">
+      <FlatList
+        data={posts}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <View className="p-2">
+            <View className="flex-row items-center mb-2">
+              <Image
+                source={{ uri: item.channelPhoto }}
+                className="w-10 h-10 rounded-full mr-2 "
+              />
+              <Text className="font-semibold text-white text-base">{item.channelName}</Text>
+            </View>
+            <Image
+              source={{ uri: item.contentImage }}
+              className="w-full h-52 rounded-md mb-2"
+              resizeMode="cover"
+            />
+            <Text className="mb-2 text-sm text-white font-vazir">{item.caption}</Text>
+            <TouchableOpacity className="flex-row items-center" onPress={() => {}}>
+              <MessageCircle size={20} color="gray" />
+              <Text className="ml-1 text-gray-200 text-sm">کامنت</Text>
+            </TouchableOpacity>
           </View>
-          )
-        } */}
-    </ScrollView>
+        )}
+      />
     </SafeAreaView>
   );
 }

@@ -28,14 +28,14 @@ export default function TabLayout() {
     checkAuth();
   }, []);
 
-  if (isAuth === null) return null;
+  // if (isAuth === null) return null;
 
-  if (!isAuth) {
-    return (
-      Platform.OS == "web" ? <Redirect href="/(auth)/login" /> : 
-      <Redirect href="/(auth)/intro" />
-    );
-  }
+  // if (!isAuth) {
+  //   return (
+  //     Platform.OS == "web" ? <Redirect href="/(auth)/login" /> : 
+  //     <Redirect href="/(auth)/intro" />
+  //   );
+  // }
   return (
     <Tab.Navigator
       screenOptions={{
@@ -110,7 +110,7 @@ export default function TabLayout() {
 
 const styles = StyleSheet.create({
   tabBar: {
-    backgroundColor: "#101010",
+    backgroundColor: "#0d0d0d",
     paddingTop: Platform.select({ web: 4, default: 12 }),
     paddingBottom: Platform.select({ web: 4, default: 8 }),
     height: Platform.select({ web: 60, default: 60 }),
