@@ -28,14 +28,14 @@ export default function TabLayout() {
     checkAuth();
   }, []);
 
-  // if (isAuth === null) return null;
+  if (isAuth === null) return null;
 
-  // if (!isAuth) {
-  //   return (
-  //     Platform.OS == "web" ? <Redirect href="/(auth)/login" /> : 
-  //     <Redirect href="/(auth)/intro" />
-  //   );
-  // }
+  if (!isAuth) {
+    return (
+      Platform.OS == "web" ? <Redirect href="/(auth)/login" /> : 
+      <Redirect href="/(auth)/intro" />
+    );
+  }
   return (
     <Tab.Navigator
       screenOptions={{

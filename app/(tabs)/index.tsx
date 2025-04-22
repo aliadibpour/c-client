@@ -23,7 +23,7 @@ const posts = [
 
 export default function HomeScreen() {
   return (
-    <SafeAreaView className="flex-1">
+    <SafeAreaView className="flex-1" style={{direction:"rtl"}}>
       <FlatList
         data={posts}
         keyExtractor={(item) => item.id}
@@ -32,13 +32,13 @@ export default function HomeScreen() {
             <View className="flex-row items-center mb-2">
               <Image
                 source={{ uri: item.channelPhoto }}
-                className="w-10 h-10 rounded-full mr-2 "
+                className="w-10 h-10 rounded-full"
               />
-              <Text className="font-semibold text-white text-base">{item.channelName}</Text>
+              <Text className="font-semibold text-white text-base mx-2">{item.channelName}</Text>
             </View>
             <Image
               source={{ uri: item.contentImage }}
-              className="w-full h-52 rounded-md mb-2"
+              className="w-full h-52 rounded mb-2"
               resizeMode="cover"
             />
             <Text className="mb-2 text-sm text-white font-vazir">{item.caption}</Text>

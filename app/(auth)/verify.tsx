@@ -19,7 +19,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 I18nManager.forceRTL(true);
 
-const CELL_COUNT = 6;
+const CELL_COUNT = 5;
 
 export default function VerifyScreen() {
   const [value, setValue] = useState('');
@@ -93,8 +93,8 @@ export default function VerifyScreen() {
 
       {/* دکمه تأیید */}
       <TouchableOpacity
-        style={[styles.button, { opacity: value.length === 6 ? 1 : 0.5 }]}
-        disabled={value.length !== 6 || loading}
+        style={[styles.button, { opacity: value.length === 5 ? 1 : 0.5 }]}
+        disabled={value.length !== 5 || loading}
         onPress={handleVerify}>
         {loading ? (
           <ActivityIndicator color="#fff" />

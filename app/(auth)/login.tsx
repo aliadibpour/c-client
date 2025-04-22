@@ -40,7 +40,7 @@ export default function LoginScreen() {
       <TextInput
         placeholder="شماره موبایل"
         placeholderTextColor="#999"
-        keyboardType="phone-pad"
+        keyboardType="number-pad"
         style={styles.input}
         value={phone}
         onChangeText={setPhone}

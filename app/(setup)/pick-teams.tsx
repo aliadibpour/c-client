@@ -2,15 +2,15 @@ import { useState } from 'react';
 import { View, Text, FlatList, TouchableOpacity, StyleSheet, Image, Alert } from 'react-native';
 
 const teamsData = [
-  { name: 'Persepolis', league: 'Iran', image: 'https://i.imgur.com/t0XHqkG.png' },
-  { name: 'Esteghlal', league: 'Iran', image: 'https://i.imgur.com/NrcnzAS.png' },
-  { name: 'Sepahan', league: 'Iran', image: 'https://i.imgur.com/qfOQGht.png' },
-  { name: 'Tractor', league: 'Iran', image: 'https://i.imgur.com/b5fIVl8.png' },
+  { name: 'Persepolis', league: 'Iran', image: 'https://media.api-sports.io/football/teams/42.png' },
+  { name: 'Esteghlal', league: 'Iran', image: 'https://media.api-sports.io/football/teams/42.png' },
+  { name: 'Sepahan', league: 'Iran', image: 'https://media.api-sports.io/football/teams/42.png' },
+  { name: 'Tractor', league: 'Iran', image: 'https://media.api-sports.io/football/teams/42.png' },
 
-  { name: 'Barcelona', league: 'LaLiga', image: 'https://i.imgur.com/O3oTtDq.png' },
-  { name: 'Real Madrid', league: 'LaLiga', image: 'https://i.imgur.com/H96xZIB.png' },
+  { name: 'Barcelona', league: 'LaLiga', image: 'https://media.api-sports.io/football/teams/42.png' },
+  { name: 'Real Madrid', league: 'LaLiga', image: 'https://media.api-sports.io/football/teams/42.png' },
 
-  { name: 'Arsenal', league: 'England', image: 'https://i.imgur.com/H76Zb6J.png' },
+  { name: 'Arsenal', league: 'England', image: 'https://media.api-sports.io/football/teams/42.png' },
   { name: 'Manchester City', league: 'England', image: 'https://i.imgur.com/UHTmGeD.png' },
   { name: 'Manchester United', league: 'England', image: 'https://i.imgur.com/AJQd7uC.png' },
   { name: 'Liverpool', league: 'England', image: 'https://i.imgur.com/zKjbhP7.png' },
@@ -89,7 +89,6 @@ export default function PickTeams() {
             >
               <Image source={{ uri: item.image }} style={styles.teamLogo} />
               <Text style={styles.teamName}>{item.name}</Text>
-              <Text style={styles.leagueName}>{item.league}</Text>
             </TouchableOpacity>
           );
         }}
@@ -109,7 +108,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 10,
   },
-  teamLogo: { width: 40, height: 40, marginBottom: 6 },
+  teamLogo: { width: 30, height: 30, marginBottom: 6 },
   teamName: { color: '#fff', fontSize: 12 },
   leagueName: { color: '#888', fontSize: 10 },
   selected: {
