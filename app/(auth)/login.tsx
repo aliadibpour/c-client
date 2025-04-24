@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   Dimensions,
+  Alert,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { FontAwesome5 } from '@expo/vector-icons';
@@ -16,15 +17,53 @@ const { width } = Dimensions.get('window');
 export default function LoginScreen() {
   const router = useRouter();
   const [phone, setPhone] = useState('');
+  const [error, setError] = useState('');
 
-  const handleStart = () => {
-    if (phone.trim()) {
-      router.push({
-        pathname: '/(auth)/verify',
-        params: { phone },
+  const validatePhone = (value: string) => {
+    const cleaned = value.replace(/[^0-9]/g, '');
+    return cleaned.length === 11 && cleaned.startsWith('09');
+  };
+
+  const handleStart = async () => {
+    if (!phone.trim()) {
+      setError('لطفا شماره موبایل را وارد کنید.');
+      return;
+    }
+  
+    if (!validatePhone(phone)) {
+      setError('شماره موبایل باید ۱۱ رقمی و با 09 شروع شود.');
+      return;
+    }
+  
+    setError('');
+  
+    const formattedPhone = phone.replace(/^0/, '+98');
+  
+    try {
+      const res = await fetch('http://172.26.144.1:3000/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ phoneNumber: formattedPhone }),
       });
+  
+      const data = await res.json();
+  
+      if (!res.ok) {
+        setError(data.message || 'خطایی در ورود رخ داد');
+        return;
+      }
+  
+      // موفقیت! انتقال به صفحه تأیید:
+      router.push('/(auth)/verify');
+  
+    } catch (err) {
+      console.error('خطا:', err);
+      setError('ارتباط با سرور برقرار نشد.');
     }
   };
+  
 
   const handleGuest = () => {
     router.push('/(setup)/pick-teams');
@@ -33,20 +72,28 @@ export default function LoginScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}> خوش اومدی 👋</Text>
-
       <Text style={styles.subtitle}>
-        شمارتو وارد کن کد ارسال میشه به تلگرامت
+        شمارتو وارد کن، کد ارسال میشه به تلگرامت
       </Text>
+
       <TextInput
         placeholder="شماره موبایل"
         placeholderTextColor="#999"
         keyboardType="number-pad"
-        style={styles.input}
+        style={[
+          styles.input,
+          error ? { borderColor: '#e63946' } : {},
+        ]}
         value={phone}
-        onChangeText={setPhone}
+        onChangeText={(text) => {
+          setPhone(text);
+          if (error) setError('');
+        }}
+        maxLength={11}
       />
 
-      {/* دکمه ورود با تلگرام */}
+      {error ? <Text style={styles.errorText}>{error}</Text> : null}
+
       <TouchableOpacity onPress={handleStart} style={styles.shadowWrapper}>
         <LinearGradient
           colors={['#0088cc', '#1c9ce6']}
@@ -59,7 +106,6 @@ export default function LoginScreen() {
         </LinearGradient>
       </TouchableOpacity>
 
-      {/* دکمه مهمان */}
       <TouchableOpacity onPress={handleGuest} style={styles.guestButton}>
         <Text style={styles.guestText}>ورود به عنوان مهمان</Text>
       </TouchableOpacity>
@@ -99,7 +145,14 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     fontFamily: 'vazir',
-    marginBottom: 20,
+    marginBottom: 10,
+  },
+  errorText: {
+    color: '#e63946',
+    fontSize: 14,
+    fontFamily: 'vazir',
+    marginBottom: 10,
+    textAlign: 'right',
   },
   shadowWrapper: {
     width: '100%',

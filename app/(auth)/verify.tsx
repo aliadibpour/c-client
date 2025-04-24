@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
-import { useRouter } from 'expo-router';
+import { useRouter, useLocalSearchParams } from 'expo-router';
 import {
   View,
   Text,
-  TouchableOpacity,
   StyleSheet,
   ActivityIndicator,
+  Alert,
   I18nManager,
   useWindowDimensions,
 } from 'react-native';
@@ -15,7 +15,6 @@ import {
   useBlurOnFulfill,
   useClearByFocusCell,
 } from 'react-native-confirmation-code-field';
-import { Ionicons } from '@expo/vector-icons';
 
 I18nManager.forceRTL(true);
 
@@ -24,52 +23,53 @@ const CELL_COUNT = 5;
 export default function VerifyScreen() {
   const [value, setValue] = useState('');
   const [loading, setLoading] = useState(false);
-  const [timer, setTimer] = useState(60);
-  const [resendAvailable, setResendAvailable] = useState(false);
   const ref = useBlurOnFulfill({ value, cellCount: CELL_COUNT });
   const [props, getCellOnLayoutHandler] = useClearByFocusCell({ value, setValue });
 
+  const { phone } = useLocalSearchParams(); // شماره از صفحه قبل
   const router = useRouter();
   const { width } = useWindowDimensions();
 
   useEffect(() => {
-    if (timer > 0) {
-      const interval = setInterval(() => setTimer(t => t - 1), 1000);
-      return () => clearInterval(interval);
-    } else {
-      setResendAvailable(true);
+    if (value.length === CELL_COUNT) {
+      verifyCode();
     }
-  }, [timer]);
+  }, [value]);
 
-  const handleVerify = () => {
+  const verifyCode = async () => {
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      if (value === '123456') {
-        router.push('/(setup)/pick-teams');
-      } else {
-        alert('کد اشتباهه!');
-      }
-    }, 1200);
-  };
+    try {
+      const res = await fetch('http://172.26.144.1:3000/auth/verify', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          phoneNumber: phone,
+          code: value,
+        }),
+      });
 
-  const handleResend = () => {
-    setValue('');
-    setResendAvailable(false);
-    setTimer(60);
-    alert('کد دوباره ارسال شد!');
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.message || 'خطا در تأیید کد');
+      }
+
+      // موفقیت
+      router.replace('/(setup)/pick-teams');
+    } catch (err:any) {
+      Alert.alert('خطا', err.message);
+      setValue('');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <View style={[styles.container, { paddingHorizontal: width * 0.08 }]}>
-      {/* دکمه بازگشت */}
-      <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
-        <Ionicons name="chevron-back" size={30} color="#fff" />
-      </TouchableOpacity>
-
       <Text style={styles.title}>کد تأیید رو وارد کن</Text>
 
-      {/* فیلد کد تأیید */}
       <CodeField
         ref={ref}
         {...props}
@@ -91,28 +91,7 @@ export default function VerifyScreen() {
         )}
       />
 
-      {/* دکمه تأیید */}
-      <TouchableOpacity
-        style={[styles.button, { opacity: value.length === 5 ? 1 : 0.5 }]}
-        disabled={value.length !== 5 || loading}
-        onPress={handleVerify}>
-        {loading ? (
-          <ActivityIndicator color="#fff" />
-        ) : (
-          <Text style={styles.buttonText}>تأیید و ورود</Text>
-        )}
-      </TouchableOpacity>
-
-      {/* تایمر یا دکمه ارسال دوباره */}
-      <View style={styles.resendWrapper}>
-        {resendAvailable ? (
-          <TouchableOpacity onPress={handleResend}>
-            <Text style={styles.resendText}>ارسال دوباره کد</Text>
-          </TouchableOpacity>
-        ) : (
-          <Text style={styles.timerText}>ارسال دوباره کد در {timer} ثانیه</Text>
-        )}
-      </View>
+      {loading && <ActivityIndicator size="large" color="#1E90FF" style={{ marginTop: 24 }} />}
     </View>
   );
 }
@@ -123,12 +102,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#000',
     justifyContent: 'center',
     paddingTop: 60,
-  },
-  backButton: {
-    position: 'absolute',
-    top: 50,
-    left: 24,
-    zIndex: 10,
   },
   title: {
     fontSize: 22,
@@ -141,7 +114,7 @@ const styles = StyleSheet.create({
   codeFieldRoot: {
     marginBottom: 30,
     justifyContent: 'space-between',
-    flexDirection: 'row', // شروع از چپ
+    flexDirection: 'row',
   },
   cell: {
     width: 44,
@@ -158,32 +131,5 @@ const styles = StyleSheet.create({
   },
   focusCell: {
     borderColor: '#1E90FF',
-  },
-  button: {
-    backgroundColor: '#1E90FF',
-    paddingVertical: 14,
-    borderRadius: 12,
-    alignItems: 'center',
-    marginBottom: 16,
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 18,
-    fontWeight: '600',
-    fontFamily: 'vazir',
-  },
-  resendWrapper: {
-    alignItems: 'center',
-    marginTop: 8,
-  },
-  resendText: {
-    color: '#1E90FF',
-    fontSize: 16,
-    fontFamily: 'vazir',
-  },
-  timerText: {
-    color: '#888',
-    fontSize: 14,
-    fontFamily: 'vazir',
   },
 });
