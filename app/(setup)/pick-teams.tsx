@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { View, Text, FlatList, TouchableOpacity, StyleSheet, Image, Alert } from 'react-native';
+import { useEffect, useRef, useState } from 'react';
+import { View, Text, FlatList, TouchableOpacity, StyleSheet, Image, Alert, BackHandler, ToastAndroid } from 'react-native';
 
 const teamsData = [
   { name: 'Persepolis', league: 'Iran', image: 'https://media.api-sports.io/football/teams/42.png' },
@@ -27,6 +27,29 @@ const teamsData = [
 ];
 
 export default function PickTeams() {
+  const backPressCount = useRef(0);
+  useEffect(() => {
+      const backAction = () => {
+        if (backPressCount.current === 0) {
+          ToastAndroid.show("برای خروج دوباره بازگشت را بزنید", ToastAndroid.SHORT);
+          backPressCount.current = 1;
+          setTimeout(() => {
+            backPressCount.current = 0;
+          }, 2000);
+          return true;
+        } else {
+          BackHandler.exitApp();
+          return true;
+        }
+      };
+  
+      const backHandler = BackHandler.addEventListener(
+        'hardwareBackPress',
+        backAction
+      );
+  
+      return () => backHandler.remove();
+  }, []);
   const [favorites, setFavorites] = useState<{ name: string; league: string }[]>([]);
 
   const isLeaguePicked = (league: string) =>

@@ -18,13 +18,13 @@ const slides = [
     key: 'slide1',
     title: 'ستاره‌های جوان',
     text: 'مجموعه‌ای از بازیکنان خاص ایران و اروپا در دوران جوانی',
-    image: require('../../assets/ww.jpg'),
+    image: require('../../assets/qq.jpg'),
   },
   {
     key: 'slide2',
     title: 'لحظه‌های تاریخی',
     text: 'تصاویر تاریخی و بامزه از فوتبال دنیا',
-    image: require('../../assets/qq.jpg'),
+    image: require('../../assets/ww.jpg'),
   },
   {
     key: 'slide3',

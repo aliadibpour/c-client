@@ -1,9 +1,11 @@
 import { Slot, Redirect } from 'expo-router';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { BackHandler, ToastAndroid } from 'react-native';
 
 export default function AuthLayout() {
   const [isAuth, setIsAuth] = useState<boolean | null>(null);
+  const backPressCount = useRef(0);
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -12,6 +14,29 @@ export default function AuthLayout() {
     };
 
     checkAuth();
+  }, []);
+
+  useEffect(() => {
+    const backAction = () => {
+      if (backPressCount.current === 0) {
+        ToastAndroid.show("برای خروج دوباره بازگشت را بزنید", ToastAndroid.SHORT);
+        backPressCount.current = 1;
+        setTimeout(() => {
+          backPressCount.current = 0;
+        }, 2000);
+        return true;
+      } else {
+        BackHandler.exitApp();
+        return true;
+      }
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction
+    );
+
+    return () => backHandler.remove();
   }, []);
 
   if (isAuth === null) return null;

@@ -23,7 +23,6 @@ export default function LoginScreen() {
     const cleaned = value.replace(/[^0-9]/g, '');
     return cleaned.length === 11 && cleaned.startsWith('09');
   };
-
   const handleStart = async () => {
     if (!phone.trim()) {
       setError('لطفا شماره موبایل را وارد کنید.');
