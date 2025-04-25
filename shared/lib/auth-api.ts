@@ -21,14 +21,14 @@ export const loginApi = async (phoneNumber: string) => {
     }
 };
   
-export const verifyApi = async (code: string) => {
+export const verifyApi = async (code: string, phoneNumber: string) => {
   try {
     const response = await fetch('http://172.26.144.1:3000/auth/verify', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ code }),
+      body: JSON.stringify({ code, phoneNumber }),
     });
 
     const data = await response.json();

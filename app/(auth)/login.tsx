@@ -38,7 +38,7 @@ export default function LoginScreen() {
   };
 
   const handleGuest = () => {
-    router.push('/(setup)/pick-teams');
+    router.push(`/(setup)/pick-teams?phone=${phone}`);
   };
 
   return (

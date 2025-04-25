@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: 'bold',
     textAlign: 'center',
     color: "white",
@@ -153,11 +153,11 @@ const styles = StyleSheet.create({
     textShadowRadius: 3,
   },
   text: {
-    fontSize: 18,
+    fontSize: 17,
     textAlign: 'center',
-    color: "white",
+    color: "rgba(250, 250, 250, 0.8)",
     fontFamily: "vazir",
-    marginTop: 10,
+    marginTop: 25,
     textShadowColor: 'rgba(0, 0, 0, 0.6)',
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 2,
@@ -166,8 +166,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     paddingVertical: 8,
     paddingHorizontal: 20,
-    borderRadius: 6,
-    width: "100%",
+    borderRadius: 5,
+    width: "95%",
     alignSelf: 'center',
   },
   buttonText: {
@@ -177,17 +177,13 @@ const styles = StyleSheet.create({
     fontFamily: "vazir"
   },
   buttonContainer: {
-    position: 'absolute',
-    bottom: 14,
     width: '100%',
+    marginVertical: 7
   },
   dotsContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
-    position: 'absolute',
-    bottom: 60,
-    left: 0,
-    right: 0,
+
   },
   dot: {
     width: 7,

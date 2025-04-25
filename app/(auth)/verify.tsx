@@ -39,25 +39,11 @@ export default function VerifyScreen() {
     }
   }, [value]);
 
+  //when the alll box fill the verifycode call
   const verifyCode = async () => {
     setLoading(true);
     try {
-      const res = await fetch('http://172.26.144.1:3000/auth/verify', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          phoneNumber: phone,
-          code: value,
-        }),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.message || 'خطا در تأیید کد');
-      }
+      await handleLogin(value, phone as string)
 
       // موفقیت
       router.replace('/(setup)/pick-teams');
