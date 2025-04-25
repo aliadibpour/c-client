@@ -10,14 +10,14 @@ import {
 import { LinearGradient } from 'expo-linear-gradient';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useState } from 'react';
-import { useLogin } from '@/shared/hooks/useLogin';
+import { useLogin } from '@/shared/hooks/use-auth';
 
 const { width } = Dimensions.get('window');
 
 export default function LoginScreen() {
   const router = useRouter();
   const [phone, setPhone] = useState('');
-  const { error, isLoading, handleLogin } = useLogin(); // Get `error` from `useLogin`
+  const { error, isLoading, handleLogin } = useLogin();
 
   const validatePhone = (value: string) => {
     const cleaned = value.replace(/[^0-9]/g, '');

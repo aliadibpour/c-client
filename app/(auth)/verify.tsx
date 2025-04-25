@@ -15,6 +15,7 @@ import {
   useBlurOnFulfill,
   useClearByFocusCell,
 } from 'react-native-confirmation-code-field';
+import { useVerify } from '@/shared/hooks/use-auth';
 
 I18nManager.forceRTL(true);
 
@@ -25,6 +26,8 @@ export default function VerifyScreen() {
   const [loading, setLoading] = useState(false);
   const ref = useBlurOnFulfill({ value, cellCount: CELL_COUNT });
   const [props, getCellOnLayoutHandler] = useClearByFocusCell({ value, setValue });
+  const { error, isLoading, handleLogin } = useVerify(); // Get `error` from `useLogin`
+  
 
   const { phone } = useLocalSearchParams(); // شماره از صفحه قبل
   const router = useRouter();
