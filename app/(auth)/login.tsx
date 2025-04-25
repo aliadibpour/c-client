@@ -6,63 +6,36 @@ import {
   TouchableOpacity,
   StyleSheet,
   Dimensions,
-  Alert,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useState } from 'react';
+import { useLogin } from '@/shared/hooks/useLogin';
 
 const { width } = Dimensions.get('window');
 
 export default function LoginScreen() {
   const router = useRouter();
   const [phone, setPhone] = useState('');
-  const [error, setError] = useState('');
+  const { error, isLoading, handleLogin } = useLogin(); // Get `error` from `useLogin`
 
   const validatePhone = (value: string) => {
     const cleaned = value.replace(/[^0-9]/g, '');
     return cleaned.length === 11 && cleaned.startsWith('09');
   };
+
   const handleStart = async () => {
     if (!phone.trim()) {
-      setError('لطفا شماره موبایل را وارد کنید.');
       return;
     }
-  
+
     if (!validatePhone(phone)) {
-      setError('شماره موبایل باید ۱۱ رقمی و با 09 شروع شود.');
       return;
     }
-  
-    setError('');
-  
-    const formattedPhone = phone.replace(/^0/, '+98');
-  
-    try {
-      const res = await fetch('http://172.26.144.1:3000/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ phoneNumber: formattedPhone }),
-      });
-  
-      const data = await res.json();
-  
-      if (!res.ok) {
-        setError(data.message || 'خطایی در ورود رخ داد');
-        return;
-      }
-  
-      // موفقیت! انتقال به صفحه تأیید:
-      router.push('/(auth)/verify');
-  
-    } catch (err) {
-      console.error('خطا:', err);
-      setError('ارتباط با سرور برقرار نشد.');
-    }
+
+    await handleLogin(phone); // Handle login
+    router.push('/(auth)/verify'); // Redirect to verify screen after successful login
   };
-  
 
   const handleGuest = () => {
     router.push('/(setup)/pick-teams');
@@ -79,14 +52,10 @@ export default function LoginScreen() {
         placeholder="شماره موبایل"
         placeholderTextColor="#999"
         keyboardType="number-pad"
-        style={[
-          styles.input,
-          error ? { borderColor: '#e63946' } : {},
-        ]}
+        style={[styles.input, error ? { borderColor: '#e63946' } : {}]}
         value={phone}
         onChangeText={(text) => {
           setPhone(text);
-          if (error) setError('');
         }}
         maxLength={11}
       />
