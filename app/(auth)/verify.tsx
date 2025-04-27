@@ -26,7 +26,7 @@ export default function VerifyScreen() {
   const [loading, setLoading] = useState(false);
   const ref = useBlurOnFulfill({ value, cellCount: CELL_COUNT });
   const [props, getCellOnLayoutHandler] = useClearByFocusCell({ value, setValue });
-  const { error, isLoading, handleLogin } = useVerify(); // Get `error` from `useLogin`
+  const { error, isLoading, handleLogin } = useVerify(); // Get `error` from `useVerify`
   
 
   const { phone } = useLocalSearchParams(); // شماره از صفحه قبل
@@ -41,6 +41,9 @@ export default function VerifyScreen() {
 
   //when the alll box fill the verifycode call
   const verifyCode = async () => {
+    console.log('phone:', phone);
+console.log('code:', value);
+
     setLoading(true);
     try {
       await handleLogin(value, phone as string)
@@ -80,7 +83,7 @@ export default function VerifyScreen() {
         )}
       />
 
-      {loading && <ActivityIndicator size="large" color="#1E90FF" style={{ marginTop: 24 }} />}
+      {isLoading && <ActivityIndicator size="large" color="#1E90FF" style={{ marginTop: 24 }} />}
     </View>
   );
 }

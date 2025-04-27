@@ -34,11 +34,11 @@ export default function LoginScreen() {
     }
 
     await handleLogin(phone); // Handle login
-    router.push('/(auth)/verify'); // Redirect to verify screen after successful login
+    router.push(`/(auth)/verify?phone=${phone}`); // Redirect to verify screen after successful login
   };
 
   const handleGuest = () => {
-    router.push(`/(setup)/pick-teams?phone=${phone}`);
+    router.push(`/(setup)/pick-teams`);
   };
 
   return (

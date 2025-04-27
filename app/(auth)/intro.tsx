@@ -36,10 +36,15 @@ const slides = [
 
 export default function IntroScreen() {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false); // Add this state to track animation
   const blackOverlay = useRef(new Animated.Value(0)).current;
   const router = useRouter();
 
   const handleNext = () => {
+    if (isAnimating) return; // Prevent multiple clicks if already animating
+
+    setIsAnimating(true); // Set animation state to true
+
     if (currentIndex === slides.length - 1) {
       router.push("/(auth)/login");
     } else {
@@ -53,7 +58,9 @@ export default function IntroScreen() {
           toValue: 0,
           duration: 200,
           useNativeDriver: true,
-        }).start();
+        }).start(() => {
+          setIsAnimating(false); // Set animation state back to false after animation is complete
+        });
       });
     }
   };
@@ -91,7 +98,7 @@ export default function IntroScreen() {
 
       {/* Button */}
       <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={handleNext} style={styles.button}>
+        <TouchableOpacity onPress={handleNext} style={styles.button} disabled={isAnimating}>
           <Text style={styles.buttonText}>
             {currentIndex === slides.length - 1 ? 'شروع' : 'بعدی'}
           </Text>
@@ -101,13 +108,7 @@ export default function IntroScreen() {
       {/* Black fade overlay between transitions */}
       <Animated.View
         pointerEvents="none"
-        style={[
-          StyleSheet.absoluteFillObject,
-          {
-            backgroundColor: 'black',
-            opacity: blackOverlay,
-          },
-        ]}
+        style={[StyleSheet.absoluteFillObject, { backgroundColor: 'black', opacity: blackOverlay }]}
       />
     </View>
   );
@@ -183,7 +184,6 @@ const styles = StyleSheet.create({
   dotsContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
-
   },
   dot: {
     width: 7,

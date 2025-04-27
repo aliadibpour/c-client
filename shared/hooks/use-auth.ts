@@ -28,17 +28,18 @@ export const useVerify = () => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleLogin = async (code: string, phoneNumber:string) => {
+  const handleLogin = async (code: string, phoneNumber: string) => {
     setIsLoading(true);
     setError('');
     try {
-      await verifyApi(code, phoneNumber);//success
+      await verifyApi(code, phoneNumber); // success
     } catch (err: any) {
       setError(err.message || 'خطا در ورود');
+      throw err; // 👈 اینجا خطا رو دوباره پرتاب کن
     } finally {
       setIsLoading(false);
     }
-  };
+  };  
 
   return {
     error,
