@@ -11,6 +11,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useState } from 'react';
 import { useLogin } from '@/shared/hooks/use-auth';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const { width } = Dimensions.get('window');
 
@@ -34,6 +35,7 @@ export default function LoginScreen() {
     }
 
     await handleLogin(phone); // Handle login
+    await AsyncStorage.setItem("auth-status", JSON.stringify({register: false, route: "verify"})); // set auth status to verify
     router.push(`/(auth)/verify?phone=${phone}`); // Redirect to verify screen after successful login
   };
 

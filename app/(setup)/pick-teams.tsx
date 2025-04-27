@@ -1,5 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
-import { View, Text, FlatList, TouchableOpacity, StyleSheet, Image, Alert, BackHandler, ToastAndroid } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, StyleSheet, Image, BackHandler, ToastAndroid } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { useRouter } from 'expo-router';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const teamsData = [
   { name: 'Persepolis', league: 'Iran', image: 'https://media.api-sports.io/football/teams/42.png' },
@@ -28,6 +31,8 @@ const teamsData = [
 
 export default function PickTeams() {
   const backPressCount = useRef(0);
+  const router = useRouter()
+  
   useEffect(() => {
       const backAction = () => {
         if (backPressCount.current === 0) {
@@ -50,6 +55,7 @@ export default function PickTeams() {
   
       return () => backHandler.remove();
   }, []);
+
   const [favorites, setFavorites] = useState<{ name: string; league: string }[]>([]);
 
   const isLeaguePicked = (league: string) =>
@@ -57,11 +63,11 @@ export default function PickTeams() {
 
   const selectTeam = (team: { name: string; league: string }) => {
     if (favorites.length >= 3) {
-      Alert.alert('فقط می‌تونی ۳ تیم انتخاب کنی!');
       return;
     }
+    if (team.name === 'Persepolis') return; // Disable "Persepolis" selection
+
     if (isLeaguePicked(team.league)) {
-      Alert.alert('از هر لیگ فقط می‌تونی ۱ تیم انتخاب کنی!');
       return;
     }
 
@@ -74,7 +80,7 @@ export default function PickTeams() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>تیم‌های مورد علاقه‌ات رو انتخاب کن (۳ تیم از لیگ‌های مختلف)</Text>
+      <Text style={styles.title}>تیم‌های مورد علاقه‌ات رو انتخاب کن</Text>
 
       <FlatList
         data={favorites}
@@ -102,13 +108,9 @@ export default function PickTeams() {
 
           return (
             <TouchableOpacity
-              disabled={disabled}
+              disabled={item.name === 'Persepolis' || disabled} // Disable "Persepolis" selection
               onPress={() => selectTeam(item)}
-              style={[
-                styles.teamCard,
-                selected && styles.selected,
-                disabled && styles.disabled,
-              ]}
+              style={[styles.teamCard, selected && styles.selected, disabled && styles.disabled]}
             >
               <Image source={{ uri: item.image }} style={styles.teamLogo} />
               <Text style={styles.teamName}>{item.name}</Text>
@@ -116,40 +118,74 @@ export default function PickTeams() {
           );
         }}
       />
+
+      <TouchableOpacity
+        style={styles.startButton}
+        onPress={async () => {
+          if (favorites.length === 0) {
+            ToastAndroid.show("حداقل یک تیم انتخاب کن!", ToastAndroid.SHORT);
+            return;
+          }
+
+          // Save to AsyncStorage
+          await AsyncStorage.setItem(
+            "auth-status",
+            JSON.stringify({ register: true, route: "/" })
+          );
+
+          // Navigate
+          router.push("/(tabs)");
+        }}
+      >
+        <Text style={styles.startButtonText}>شروع اپلیکیشن</Text>
+      </TouchableOpacity>
+
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#000', padding: 15 },
-  title: { color: '#fff', fontSize: 16, marginBottom: 10, textAlign: 'center' },
+  container: { flex: 1, backgroundColor: '#121212', padding: 15 },
+  title: { color: '#fff', fontSize: 14, marginBottom: 10, textAlign: 'center' },
   teamCard: {
     flex: 1,
-    backgroundColor: '#1a1a1a',
+    backgroundColor: '#333',
     margin: 6,
-    borderRadius: 12,
+    borderRadius: 10,
     alignItems: 'center',
-    padding: 10,
+    padding: 8,
   },
-  teamLogo: { width: 30, height: 30, marginBottom: 6 },
+  teamLogo: { width: 28, height: 28, marginBottom: 6 },
   teamName: { color: '#fff', fontSize: 12 },
-  leagueName: { color: '#888', fontSize: 10 },
   selected: {
-    borderColor: '#00f',
-    borderWidth: 2,
+    borderColor: '#fff',
+    borderWidth: 1.5,
   },
   disabled: {
     opacity: 0.3,
   },
   favoriteItem: {
-    backgroundColor: '#0022aa',
+    backgroundColor: '#444',
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 10,
     paddingVertical: 5,
     marginRight: 10,
-    borderRadius: 20,
+    borderRadius: 15,
   },
   favoriteText: { color: '#fff', marginRight: 5 },
   removeBtn: { color: '#fff', fontSize: 16 },
+  startButton: {
+    marginTop: 20,
+    backgroundColor: '#fff',
+    borderRadius: 20,
+    paddingVertical: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  startButtonText: {
+    color: '#000',
+    fontSize: 14,
+    fontWeight: 'bold',
+  },
 });

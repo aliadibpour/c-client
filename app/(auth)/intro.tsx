@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const { width } = Dimensions.get('window');
 
@@ -40,12 +41,13 @@ export default function IntroScreen() {
   const blackOverlay = useRef(new Animated.Value(0)).current;
   const router = useRouter();
 
-  const handleNext = () => {
+  const handleNext = async() => {
     if (isAnimating) return; // Prevent multiple clicks if already animating
 
     setIsAnimating(true); // Set animation state to true
 
     if (currentIndex === slides.length - 1) {
+      await AsyncStorage.setItem("auth-status", JSON.stringify({register: false, route: "login"})); // set auth status to login
       router.push("/(auth)/login");
     } else {
       Animated.timing(blackOverlay, {

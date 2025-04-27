@@ -21,8 +21,8 @@ export default function TabLayout() {
 
   useEffect(() => {
     const checkAuth = async () => {
-      const jwt = await AsyncStorage.getItem("jwt");
-      setIsAuth(!!jwt);
+      const authStatus = await AsyncStorage.getItem("auth-status");
+setIsAuth(JSON.parse(authStatus || '{"register": false}').register);
     };
 
     checkAuth();

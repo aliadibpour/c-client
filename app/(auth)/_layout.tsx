@@ -5,12 +5,20 @@ import { BackHandler, ToastAndroid } from 'react-native';
 
 export default function AuthLayout() {
   const [isAuth, setIsAuth] = useState<boolean | null>(null);
+  const [authRoute, setAuthRoute] = useState<"/" | "login" | "verify">("/");
   const backPressCount = useRef(0);
 
   useEffect(() => {
     const checkAuth = async () => {
-      const jwt = await AsyncStorage.getItem("jwt");
-      setIsAuth(!!jwt);
+      const authStatus = await AsyncStorage.getItem("auth-status");
+      if (authStatus) {
+        const parsed = JSON.parse(authStatus);
+        setIsAuth(parsed.register);
+        setAuthRoute(parsed.route || "/");
+      } else {
+        setIsAuth(false);
+        setAuthRoute("/");
+      }
     };
 
     checkAuth();
@@ -39,7 +47,9 @@ export default function AuthLayout() {
     return () => backHandler.remove();
   }, []);
 
-  if (isAuth === null) return null;
+  if (isAuth === null) {
+    return null;
+  }
 
   if (isAuth) {
     return <Redirect href="/(tabs)" />;

@@ -16,6 +16,7 @@ import {
   useClearByFocusCell,
 } from 'react-native-confirmation-code-field';
 import { useVerify } from '@/shared/hooks/use-auth';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 I18nManager.forceRTL(true);
 
@@ -49,6 +50,7 @@ console.log('code:', value);
       await handleLogin(value, phone as string)
 
       // موفقیت
+      await AsyncStorage.setItem("auth-status", JSON.stringify({register: false, route: "pick-teams"})); // set auth status to pick-teams
       router.replace('/(setup)/pick-teams');
     } catch (err:any) {
       Alert.alert('خطا', err.message);
