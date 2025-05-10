@@ -22,7 +22,7 @@ export default function TabLayout() {
   useEffect(() => {
     const checkAuth = async () => {
       const authStatus = await AsyncStorage.getItem("auth-status");
-setIsAuth(JSON.parse(authStatus || '{"register": false}').register);
+      setIsAuth(JSON.parse(authStatus || '{"register": false}').register);
     };
 
     checkAuth();
